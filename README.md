@@ -3,9 +3,10 @@ CDC POST DISCHARGE STROKE PATIENT DATA REPORTING APP - PHASE 2
 
 to run the app in the VM:
 
-cd ~/CDC-Post-Discharge/strokeservice && sudo mvn spring-boot:run
-
-cd ~/CDC-Post-Discharge/triggerservice && sudo mvn spring-boot:run -DinitialFetchDays=90
+1.   open terminal
+2.   ./start-strokeservice.sh
+3.   open terminal
+4.   ./start-trigger.sh
 
 in the browser, navigate to  
 
