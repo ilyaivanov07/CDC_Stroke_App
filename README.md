@@ -32,8 +32,8 @@ sample survey is in
 
 SMART on FHIR server runs on 
 
-http://localhost:3000/
-http://localhost:9080
+1. http://localhost:3000/
+2. http://localhost:9080
 
 to add patients to the SMART on FHIR server, the following scripts are executed:
 
