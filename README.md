@@ -10,17 +10,12 @@ to run the app in the VM:
 3.   open terminal
 4.   ./start-trigger.sh
 
-in the browser, navigate to  
+in the browser, navigate to  http://localhost:8888/  
+user: admin  
+pwd: password  
 
-http://localhost:8888/
-
-user: admin
-
-pwd: password
-
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-### Open Questions 
-
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+### Open Questions   
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Notes/Observations #
@@ -60,10 +55,9 @@ seems like all .yml files in /home/student/installer/provisioning are executed.
 
 Error connecting to the server: FATAL:  Peer authentication failed for user "postgres"
 can be fixed by:
-open the file pg_hba.conf for Ubuntu it will be in /etc/postgresql/9.x/main and change this line:
-local   all             postgres                                trust
-
-sudo service postgresql restart
+1. open the file pg_hba.conf in /etc/postgresql/9.x/main
+2. change this line: local   all postgres  **trust**
+3. sudo service postgresql restart
 
 	
 	
