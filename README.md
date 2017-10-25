@@ -50,12 +50,12 @@ smart-on-fhir-servers.yml contains:
   roles:
     - common
     - ldap
-</code>  	
+</code>  
+
 what files are executed?
 seems like all .yml files in /home/student/installer/provisioning are executed.
 
-Error connecting to the server: FATAL:  Peer authentication failed for user "postgres"
-can be fixed by:
+'Error connecting to the server: FATAL:  Peer authentication failed for user "postgres"' can be fixed by:
 1. open the file pg_hba.conf in /etc/postgresql/9.x/main
 2. change this line: local   all postgres  **trust**
 3. sudo service postgresql restart
