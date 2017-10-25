@@ -43,9 +43,6 @@ angular.module('Home')
 				processDaysSinceDischarge( value );
 				setQRavailable(value);
 			});
-			
-			
-			
 			$scope.patients = response;
 		});
 	};

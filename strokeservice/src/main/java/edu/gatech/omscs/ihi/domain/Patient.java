@@ -2,11 +2,18 @@ package edu.gatech.omscs.ihi.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonRawValue;
@@ -36,21 +43,21 @@ public class Patient implements Serializable
 	@Column( columnDefinition = "TEXT" )
 	private String encounterJson;
 	
-	private String questionnaireResponseId;
-	
-	@JsonRawValue
-	@Column( columnDefinition = "TEXT" )
-	private String questionnaireResponseJson;
-	
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="patient_questionnaire",
+    joinColumns= {
+    				@JoinColumn(name="mrn"), 
+    				@JoinColumn(name="encounter_id"), 
+    				@JoinColumn(name="destination_id")
+    			},
+    inverseJoinColumns={@JoinColumn(name="id")})
+	private Set<Questionnaire> answeredQuestionnaires;
 
-	@Column( columnDefinition = "TEXT" )
-	private String questionnaireResponseCsv;
+	@Transient
+	private Set<edu.gatech.omscs.ihi.bean.Questionnaire> questionnaires;
 	
-
-	public Patient()
-	{
-		
-	}
+	
+	public Patient() {}
 	
 	public Patient( PatientId patientId, 
 			String firstName, 
@@ -67,27 +74,6 @@ public class Patient implements Serializable
 		this.encounterJson = encounterJson;		
 	}
 	
-	
-	public Patient( PatientId patientId, 
-					String firstName, 
-					String lastName, 
-					Date dischargeDate, 
-					Date admitDate, 
-					String encounterJson,
-					String qrId,
-					String qrJson,
-					String qrCsv)
-	{
-		this.patientId = patientId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dischargeDate = dischargeDate;
-		this.admitDate = admitDate;
-		this.encounterJson = encounterJson;
-		this.questionnaireResponseId = qrId;
-		this.questionnaireResponseJson = qrJson;
-		this.questionnaireResponseCsv = qrCsv;
-	}
 	
 	public PatientId getPatientId() 
 	{
@@ -149,27 +135,21 @@ public class Patient implements Serializable
 		this.dischargeDate = dischargeDate;
 	}
 
-	public String getQuestionnaireResponseId() {
-		return questionnaireResponseId;
+	
+	public Set<Questionnaire> getAnsweredQuestionnaires() {
+		return answeredQuestionnaires;
 	}
 
-	public void setQuestionnaireResponseId(String questionnaireResponseId) {
-		this.questionnaireResponseId = questionnaireResponseId;
+	public void setAnsweredQuestionnaires(Set<Questionnaire> questionnaires) {
+		this.answeredQuestionnaires = questionnaires;
+	}
+	
+	public Set<edu.gatech.omscs.ihi.bean.Questionnaire> getQuestionnaires() {
+		return questionnaires;
 	}
 
-	public String getQuestionnaireResponseJson() {
-		return questionnaireResponseJson;
+	public void setQuestionnaires(Set<edu.gatech.omscs.ihi.bean.Questionnaire> questionnaires) {
+		this.questionnaires = questionnaires;
 	}
 
-	public void setQuestionnaireResponseJson(String qr_json) {
-		this.questionnaireResponseJson = qr_json;
-	}
-
-	public String getQuestionnaireResponseCsv() {
-		return questionnaireResponseCsv;
-	}
-
-	public void setQuestionnaireResponseCsv(String qr_csv) {
-		this.questionnaireResponseCsv = qr_csv;
-	}
 }

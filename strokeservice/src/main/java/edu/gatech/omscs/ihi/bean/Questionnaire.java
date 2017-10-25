@@ -1,0 +1,44 @@
+package edu.gatech.omscs.ihi.bean;
+
+public class Questionnaire implements java.io.Serializable {
+
+	private static final long serialVersionUID = 4273123751814474083L;
+
+	private String id;
+	private String json;
+	private Boolean answered;
+	private String title;
+	private String days;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getJson() {
+		return json;
+	}
+	public void setJson(String json) {
+		this.json = json;
+	}
+	public Boolean getAnswered() {
+		return answered;
+	}
+	public void setAnswered(Boolean answered) {
+		this.answered = answered;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getDays() {
+		return days;
+	}
+	public void setDays(String days) {
+		this.days = days;
+	}
+
+}

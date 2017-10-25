@@ -4,8 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +100,41 @@ public class StrokeController
 			int destId = this.surveyAdminService.getDestinationForSurveyAdmin( request.getHeader( "username" ) );
 			String strDestId = new Integer(destId).toString();
 			
-			return JsonUtils.convertBeanToJsonNode( this.patientRepository.findAllPatientsByDestinationId( strDestId ) );
+			// get all available questionnaires
+			List<Questionnaire> questionnaires = (List<Questionnaire>)this.questionnaireRepository.findAll();
+
+			List<Patient> patients = (List<Patient>)this.patientRepository.findAllPatientsByDestinationId( strDestId );
+			
+			// loop through patients
+			for (Patient patient: patients) {
+				Set<Questionnaire> answeredQuestionnaires = patient.getAnsweredQuestionnaires();
+				Set<edu.gatech.omscs.ihi.bean.Questionnaire> patientQuestionnaires = new HashSet<edu.gatech.omscs.ihi.bean.Questionnaire>();
+
+				// loop through all available questionnaires
+				for (Questionnaire questionnaire : questionnaires) {
+					edu.gatech.omscs.ihi.bean.Questionnaire q = new edu.gatech.omscs.ihi.bean.Questionnaire();
+					String id = questionnaire.getId();
+					String json = questionnaire.getJson();
+					q.setId(id);
+					q.setJson(json);
+					q.setAnswered(false);
+					
+					JsonNode node = JsonUtils.converStringToJsonNode(json);
+					q.setTitle(node.get("group").get("title").asText());
+					q.setDays(node.get("days").asText());
+					
+					for (Questionnaire answered: answeredQuestionnaires) {
+						if (answered.getId().equals(id)) {
+							q.setAnswered(true);
+							break;
+						}
+					}
+					patientQuestionnaires.add(q);
+				}
+				patient.setQuestionnaires(patientQuestionnaires);
+			}
+			
+			return JsonUtils.convertBeanToJsonNode( patients );
 		}
 		
 		return null;
@@ -288,9 +326,9 @@ public class StrokeController
 			    // getting strokapp patient given mrn
 			    Patient toUpdate = this.patientRepository.findOne(new PatientId(patientId, encounterId, destinationId));
 			    
-			    toUpdate.setQuestionnaireResponseId(qrId);
-			    toUpdate.setQuestionnaireResponseJson(encoded);
-			    toUpdate.setQuestionnaireResponseCsv(csv.toString());
+			    //toUpdate.setQuestionnaireResponseId(qrId);
+			    //toUpdate.setQuestionnaireResponseJson(encoded);
+			    //toUpdate.setQuestionnaireResponseCsv(csv.toString());
 			    this.patientRepository.save(toUpdate);
 				
 			}
