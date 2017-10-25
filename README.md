@@ -19,11 +19,11 @@ user: admin
 pwd: password
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Open Questions #
+### Open Questions 
 
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Notes/Observations #
+### Notes/Observations #
 
 
 sample survey is in
