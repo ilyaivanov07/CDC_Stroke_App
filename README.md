@@ -2,6 +2,7 @@
 
 ## CDC POST DISCHARGE STROKE PATIENT DATA REPORTING APP - PHASE 2
 
+
 to run the app in the VM:
 
 1.   open terminal
@@ -16,6 +17,14 @@ http://localhost:8888/
 user: admin
 
 pwd: password
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Open Questions #
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Notes/Observations #
+
 
 sample survey is in
 
