@@ -41,6 +41,7 @@ ansible-playbook  -c local -i 'localhost,'  -t 'reset_db,load_patients' smart-on
 
 smart-on-fhir-servers.yml contains:
 
+<code>
 ---
 - hosts: all
   sudo: yes
@@ -49,7 +50,7 @@ smart-on-fhir-servers.yml contains:
   roles:
     - common
     - ldap
-	
+</code>  	
 what files are executed?
 seems like all .yml files in /home/student/installer/provisioning are executed.
 
