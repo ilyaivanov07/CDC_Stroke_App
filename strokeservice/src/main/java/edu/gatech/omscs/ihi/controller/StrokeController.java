@@ -123,21 +123,17 @@ public class StrokeController
 					String id = questionnaire.getId();
 					String json = questionnaire.getJson();
 					q.setId(id);
-					q.setJson(json);
 					q.setAnswered(false);
 					
 					JsonNode node = JsonUtils.converStringToJsonNode(json);
 					q.setTitle(node.get("group").get("title").asText());
 					q.setDays(node.get("days").asText());
 					
-					
 					for (Questionnaire answered: answeredQuestionnaires) {
 						System.out.println("answered questionnaire: " + answered.getId());
-						
-						
 						if (answered.getId().equals(id)) {
-							
 							q.setAnswered(true);
+							q.setJson(answered.getJson());
 							break;
 						}
 					}
@@ -218,6 +214,19 @@ public class StrokeController
 		
 		return null;
 	}
+	
+	@RequestMapping( value = "questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
+	public JsonNode getQuestionnaireJson( HttpServletRequest request)
+	{
+		if ( checkCredentials( request) )
+		{			
+			return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findAll() );
+		}
+		
+		return null;
+	}
+
+	
 	
 	@RequestMapping( value = "questionnaire/{id}", method = RequestMethod.DELETE )
 	public void deleteQuestionnaire( HttpServletRequest request, @PathVariable( "id" ) String questionnaireId )

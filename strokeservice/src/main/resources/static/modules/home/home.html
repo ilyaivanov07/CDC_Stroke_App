@@ -8,7 +8,7 @@
 		</div>
 	</div>
 
-  	<table class="table">
+  	<table class="table table-striped table-bordered table-hover">
 		<thead>
       		<tr>
         		<th>
@@ -29,11 +29,11 @@
        		</tr>
        	</thead>
       	<tbody>
-  			<tr ng-repeat-start="patient in patients | orderBy:orderByField:reverseSort">
+  			<tr ng-repeat="patient in patients | orderBy:orderByField:reverseSort">
    				 <td>{{patient.firstName + ' ' + patient.lastName}}</td>
-   				 <td><span>{{patient.days}}</span></td>
+   				 <td>{{patient.days}}</td>
        			 <td>
-       			 	<div ng-repeat="questionnaire in patient.questionnaires">
+       			 	<div ng-repeat-start="questionnaire in patient.questionnaires">
 		       			<span ng-if="questionnaire.days < patient.days" >
 		       				<span ng-if="questionnaire.answered" >{{questionnaire.title}}</span>
 							<a href ng-if="!questionnaire.answered" ng-click="viewQuestionnaire(patient, questionnaire)">
@@ -41,23 +41,22 @@
 								{{questionnaire.title}}
 							</a>
 		       			</span>
-		       			<span ng-if="questionnaire.answered" >(<a href="#/">{{questionnaire.id}}</a>)</span>
+		       			<span ng-if="questionnaire.answered" >
+		       				(<a href="#/" ng-click="main.activeRow = patient.firstName; viewQuestionnaireResponse(patient, questionnaire.json); showing = !showing">{{questionnaire.id}}</a>)
+		       			</span>
+					</div>
+					<div ng-repeat-end ng-show="main.activeRow==patient.firstName">
+	           			<a href ng-click="downloadQuestionnaireResponseCSV(patient)" style="margin-right:60px;">
+							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> CSV</span>
+						</a>
+						<a href ng-click="downloadQuestionnaireResponseJSON(patient)" id="downloadAnchorElem">
+							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> JSON</span>
+						</a>
 					</div>						
        			 </td>
        		</tr>
-       		<tr ng-repeat-end ng-show="activeRow==patient.firstName">
-           		<td ng-show="showing" colspan="5">
-           			<pre id="json">
-           				<json-formatter json="patient.qresponse" open="1"></json-formatter>
-           			</pre>
-           			<a href ng-click="downloadQuestionnaireResponseCSV(patient)" style="margin-right:60px;">
-						<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> CSV</span>
-					</a>
-					<a href ng-click="downloadQuestionnaireResponseJSON(patient)" id="downloadAnchorElem">
-						<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> JSON</span>
-					</a>
-           		</td>
-       		</tr>        			 
+       		
    		</tbody>		 
 	</table>
+	
 </div>

@@ -54,6 +54,7 @@ angular.module('Home')
 		}
 	}
 	
+	
 	$scope.viewQuestionnaire = function(patient, questionnaire)
 	{
 		$rootScope.selectedPatient = patient;
@@ -62,11 +63,12 @@ angular.module('Home')
 		$location.path('/questionnaire');
 	};
 	
-	$scope.viewQuestionnaireResponse =  function(patient)
+
+	$scope.viewQuestionnaireResponse =  function(patient, json)
 	{
-		patient.qresponse =  patient.questionnaireResponseJson;
-	
+		patient.qresponse = json;
 	}
+	
 	
 	$scope.downloadQuestionnaireResponseJSON =  function(patient)
 	{

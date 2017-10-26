@@ -28,7 +28,7 @@ angular.module('Admin')
 		$http(
 		{
 			method: 'GET',
-			url : 'cdc/api/stroke/questionnaire',
+			url : 'cdc/api/stroke/questionnaires',
 			headers : 
 			{
 				'username' : $cookies.get( 'username' ), 
