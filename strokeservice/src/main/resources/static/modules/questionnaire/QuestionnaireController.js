@@ -70,7 +70,7 @@ angular.module('Questionnaire')
 		$http(
 		{
 			method: 'GET',
-			url : '/cdc/api/stroke/questionnaire',
+			url : '/cdc/api/stroke/questionnaire?questionnaireId=' + $rootScope.questionnaire.id,
 			headers : 
 			{
 				'username' : $cookies.get( 'username' ), 
@@ -79,7 +79,9 @@ angular.module('Questionnaire')
 		})
 		.success( function ( response ) 
 		{
-			var data = response[ response.length - 1 ].json;
+			//var data = response[ response.length - 1 ].json;
+			var data = response.json;
+			
 			$scope.questionnaire = data;
 			
             angular.forEach( data.group.question, function( qu ) 
@@ -404,10 +406,11 @@ angular.module('Questionnaire')
 		$http(
 		{
 			method: 'POST',
-			url : '/cdc/api/stroke/questionnaire-response?patientid=' + $rootScope.selectedPatient.patientId.mrn +
+			url : '/cdc/api/stroke/questionnaire-response?mrn=' + $rootScope.selectedPatient.patientId.mrn +
 			 '&encounterid=' + $rootScope.selectedPatient.patientId.encounterId + 
-			 '&destinationid=' + $rootScope.selectedPatient.patientId.destinationId,
-			headers : 
+			 '&destinationid=' + $rootScope.selectedPatient.patientId.destinationId +
+			 '&questionnaireId=' + $rootScope.questionnaire.id,
+			 headers : 
 			{
 				'username' : $cookies.get( 'username' ), 
 				'password' : $cookies.get( 'password' )

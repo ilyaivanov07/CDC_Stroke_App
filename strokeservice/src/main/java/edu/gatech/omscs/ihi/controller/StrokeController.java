@@ -34,9 +34,12 @@ import ca.uhn.fhir.model.dstu2.resource.QuestionnaireResponse.GroupQuestion;
 
 import ca.uhn.fhir.model.primitive.StringDt;
 import edu.gatech.omscs.ihi.domain.Patient;
+import edu.gatech.omscs.ihi.domain.PatientQuestionnaire;
 import edu.gatech.omscs.ihi.domain.StrokeCode;
 import edu.gatech.omscs.ihi.domain.id.PatientId;
+import edu.gatech.omscs.ihi.domain.id.PatientQuestionnaireId;
 import edu.gatech.omscs.ihi.domain.Questionnaire;
+import edu.gatech.omscs.ihi.repository.PatientQuestionnaireRepository;
 import edu.gatech.omscs.ihi.repository.PatientRepository;
 import edu.gatech.omscs.ihi.repository.QuestionnaireRepository;
 import edu.gatech.omscs.ihi.service.FhirResourceService;
@@ -63,6 +66,10 @@ public class StrokeController
 	
 	@Autowired 
 	private QuestionnaireRepository questionnaireRepository;
+	
+	@Autowired
+	private PatientQuestionnaireRepository patientQuestionnaireRepository;
+	
 	
 	private boolean checkCredentials( HttpServletRequest request)
 	{
@@ -123,8 +130,13 @@ public class StrokeController
 					q.setTitle(node.get("group").get("title").asText());
 					q.setDays(node.get("days").asText());
 					
+					
 					for (Questionnaire answered: answeredQuestionnaires) {
+						System.out.println("answered questionnaire: " + answered.getId());
+						
+						
 						if (answered.getId().equals(id)) {
+							
 							q.setAnswered(true);
 							break;
 						}
@@ -196,11 +208,12 @@ public class StrokeController
 	}
 	
 	@RequestMapping( value = "questionnaire", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
-	public JsonNode getQuestionnaireJson( HttpServletRequest request )
+	public JsonNode getQuestionnaireJson( HttpServletRequest request, @RequestParam( "questionnaireId" ) String questionnaireId)
 	{
 		if ( checkCredentials( request) )
 		{			
-			return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findAll() );
+			return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findOne(questionnaireId));
+			//return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findAll() );
 		}
 		
 		return null;
@@ -235,9 +248,10 @@ public class StrokeController
 	
 	@RequestMapping( value = "questionnaire-response", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
 	public void uploadQuestionnaireResponse( HttpServletRequest request, 
-			@RequestParam( "patientid" ) String patientId ,
-			@RequestParam( "encounterid" ) String encounterId ,
-			@RequestParam( "destinationid" ) String destinationId ,
+			@RequestParam( "mrn" ) String mrn,
+			@RequestParam( "encounterid" ) String encounterId,
+			@RequestParam( "destinationid" ) String destinationId,
+			@RequestParam( "questionnaireId" ) String questionnaireId,
 			@RequestBody JsonNode answers)
 	{
 		if ( checkCredentials( request) )
@@ -259,15 +273,12 @@ public class StrokeController
 				Iterable<Questionnaire> surveys = this.questionnaireRepository.findAll();
 				Iterator<Questionnaire> itr = surveys.iterator();
 				Questionnaire survey =  itr.next();
-				
-				//System.out.println("Questionnaire id: " + survey.getId());
-				
-				// Set the id on the QuestionnaireResponse
+			
+				// Set the id on the FHIR QuestionnaireResponse
 				QuestionnaireResponse qr = new QuestionnaireResponse();
 				qr.getQuestionnaire().setReference("Questionnaire/" + survey.getId());
 				qr.getGroup().setLinkId("root");
-				
-				qr.getSubject().setReference("Patient/" + patientId); 					
+				qr.getSubject().setReference("Patient/" + mrn); 					
 				
 				// Iterate through the AnswerPayload and construct the QuestionnaireResponse
 				ArrayList<AnswerPayload> vals = new ArrayList<AnswerPayload>(answerMap.values());
@@ -318,18 +329,25 @@ public class StrokeController
 								
 				FhirContext ctx = this.serverConnectionService.getFhirContext();
 				String encoded = ctx.newJsonParser().encodeResourceToString(qr);
-			    //System.out.println("====QR====\n" + encoded);
 			    
 			    // Push QuestionnaireResponse to FHIR
 			    String qrId = this.fhirResource.updateResource("QuestionnaireResponse", encoded);
 			    
 			    // getting strokapp patient given mrn
-			    Patient toUpdate = this.patientRepository.findOne(new PatientId(patientId, encounterId, destinationId));
-			    
+			    //Patient toUpdate = this.patientRepository.findOne(new PatientId(mrn, encounterId, destinationId));
 			    //toUpdate.setQuestionnaireResponseId(qrId);
 			    //toUpdate.setQuestionnaireResponseJson(encoded);
 			    //toUpdate.setQuestionnaireResponseCsv(csv.toString());
-			    this.patientRepository.save(toUpdate);
+			    //this.patientRepository.save(toUpdate);
+			    
+			    // save PatientQuestionnaire in DB
+			    PatientQuestionnaireId patientQuestionnaireId = new PatientQuestionnaireId(mrn, encounterId, destinationId, questionnaireId);
+			    PatientQuestionnaire patientQuestionnaire = new PatientQuestionnaire(patientQuestionnaireId, 
+			    		qrId, 
+			    		encoded, 
+			    		csv.toString());
+			    this.patientQuestionnaireRepository.save(patientQuestionnaire);
+			    
 				
 			}
 			catch ( Exception exp )

@@ -36,7 +36,7 @@
        			 	<div ng-repeat="questionnaire in patient.questionnaires">
 		       			<span ng-if="questionnaire.days < patient.days" >
 		       				<span ng-if="questionnaire.answered" >{{questionnaire.title}}</span>
-							<a href ng-if="!questionnaire.answered" ng-click="viewQuestionnaire(patient)">
+							<a href ng-if="!questionnaire.answered" ng-click="viewQuestionnaire(patient, questionnaire)">
 								<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 								{{questionnaire.title}}
 							</a>

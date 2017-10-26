@@ -54,9 +54,11 @@ angular.module('Home')
 		}
 	}
 	
-	$scope.viewQuestionnaire = function(patient)
+	$scope.viewQuestionnaire = function(patient, questionnaire)
 	{
 		$rootScope.selectedPatient = patient;
+		$rootScope.questionnaire = questionnaire;
+		//$location.url('/questionnaire?questionnaireId=' + questionnaire.id);
 		$location.path('/questionnaire');
 	};
 	

@@ -5,11 +5,14 @@ import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
@@ -43,13 +46,14 @@ public class Patient implements Serializable
 	@Column( columnDefinition = "TEXT" )
 	private String encounterJson;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="patient_questionnaire",
     joinColumns= {
-    				@JoinColumn(name="mrn"), 
-    				@JoinColumn(name="encounter_id"), 
-    				@JoinColumn(name="destination_id")
+				@JoinColumn(name="destination_id"),
+				@JoinColumn(name="encounter_id"), 
+				@JoinColumn(name="mrn") 
     			},
+    //foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
     inverseJoinColumns={@JoinColumn(name="id")})
 	private Set<Questionnaire> answeredQuestionnaires;
 

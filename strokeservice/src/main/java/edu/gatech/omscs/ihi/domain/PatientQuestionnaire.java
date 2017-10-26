@@ -3,11 +3,11 @@ package edu.gatech.omscs.ihi.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonRawValue;
+import edu.gatech.omscs.ihi.domain.id.PatientQuestionnaireId;
 
 @Entity
 @Table(name = "patient_questionnaire")
@@ -15,19 +15,8 @@ public class PatientQuestionnaire implements Serializable {
 
 	private static final long serialVersionUID = 5169327870526300542L;
 	
-	@Id
-	private String mrn;
-	
-	@Id
-	@Column(name = "encounter_id")
-	private String encounterId;
-	
-	@Id
-	@Column(name = "destination_id")
-	private String destinationId;
-	
-	@Id
-	private String id;
+	@EmbeddedId
+	private PatientQuestionnaireId patientQuestionnaireId;
 	
 	@Column(name = "questionnaire_response_id")
 	private String questionnaireResponseId;
@@ -39,30 +28,18 @@ public class PatientQuestionnaire implements Serializable {
 	@Column(name = "questionnaire_response_csv", columnDefinition = "TEXT")
 	private String questionnaireResponseCsv;
 	
-	public String getMrn() {
-		return mrn;
+	public PatientQuestionnaire() { }
+
+	
+	public PatientQuestionnaire(PatientQuestionnaireId patientQuestionnaireId, String questionnaireResponseId,
+			String questionnaireResponseJson, String questionnaireResponseCsv) {
+		this.patientQuestionnaireId = patientQuestionnaireId;
+		this.questionnaireResponseId = questionnaireResponseId;
+		this.questionnaireResponseJson = questionnaireResponseJson;
+		this.questionnaireResponseCsv = questionnaireResponseCsv;
 	}
-	public void setMrn(String mrn) {
-		this.mrn = mrn;
-	}
-	public String getEncounterId() {
-		return encounterId;
-	}
-	public void setEncounterId(String encounterId) {
-		this.encounterId = encounterId;
-	}
-	public String getDestinationId() {
-		return destinationId;
-	}
-	public void setDestinationId(String destinationId) {
-		this.destinationId = destinationId;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+
+	
 	public String getQuestionnaireResponseId() {
 		return questionnaireResponseId;
 	}
@@ -80,6 +57,12 @@ public class PatientQuestionnaire implements Serializable {
 	}
 	public void setQuestionnaireResponseCsv(String questionnaireResponseCsv) {
 		this.questionnaireResponseCsv = questionnaireResponseCsv;
+	}
+	public PatientQuestionnaireId getPatientQuestionnaireId() {
+		return patientQuestionnaireId;
+	}
+	public void setPatientQuestionnaireId(PatientQuestionnaireId patientQuestionnaireId) {
+		this.patientQuestionnaireId = patientQuestionnaireId;
 	}
 	
 	

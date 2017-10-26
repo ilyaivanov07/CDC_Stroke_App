@@ -1,7 +1,6 @@
 package edu.gatech.omscs.ihi.domain.id;
 
 import java.io.Serializable;
-
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -10,9 +9,7 @@ public class PatientId implements Serializable
 	private static final long serialVersionUID = -6930868038133884566L;
 	
 	private String mrn;
-	
 	private String encounterId;
-	
 	private String destinationId;
 	
 	public PatientId()
