@@ -2,7 +2,9 @@ package edu.gatech.omscs.ihi.impl;
 
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
@@ -20,6 +22,9 @@ public class FhirResourceServiceImpl implements FhirResourceService
 	@Autowired
 	private ServerConnectionService serverConnectionService;
 
+	@Value( "${strokeService.baseUrl}" )
+	private String strokeServiceUrl;
+	
 	@Override
 	public JsonNode getFhirResource( String resourceType, String resourceId ) 
 	{
@@ -67,4 +72,24 @@ public class FhirResourceServiceImpl implements FhirResourceService
 	{
 		
 	}
+	
+	
+	public JsonNode getStrokeCodesFromStrokeAppServer()
+	{
+		JsonNode values = null;
+		try
+		{	
+			RestTemplate restTemplate = new RestTemplate();
+			values = restTemplate.getForObject(strokeServiceUrl + "/codes/icd", JsonNode.class);
+			
+		}
+		catch ( Exception exception )
+		{
+			exception.printStackTrace();
+		}
+		
+		return values;
+	}
+	
+	
 }

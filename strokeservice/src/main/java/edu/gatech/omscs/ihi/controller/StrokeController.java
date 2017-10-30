@@ -43,6 +43,7 @@ import edu.gatech.omscs.ihi.repository.PatientQuestionnaireRepository;
 import edu.gatech.omscs.ihi.repository.PatientRepository;
 import edu.gatech.omscs.ihi.repository.QuestionnaireRepository;
 import edu.gatech.omscs.ihi.service.FhirResourceService;
+import edu.gatech.omscs.ihi.service.PatientService;
 import edu.gatech.omscs.ihi.service.ServerConnectionService;
 import edu.gatech.omscs.ihi.service.SurveyAdminService;
 import edu.gatech.omscs.ihi.util.AnswerPayload;
@@ -60,6 +61,9 @@ public class StrokeController
 	
 	@Autowired
 	private SurveyAdminService surveyAdminService;
+	
+	@Autowired
+	private PatientService patientService;
 	
 	@Autowired
 	private FhirResourceService fhirResource;
@@ -98,12 +102,15 @@ public class StrokeController
 	// PATIENT
 	// ***********************************
 	// ***********************************
-	
+	// get patients
 	@RequestMapping( value = "patient", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
 	public JsonNode getPatients( HttpServletRequest request )
 	{
 		if ( checkCredentials( request ) )
 		{
+			// get patients from FHIR server
+			patientService.getPatientsFromFHIR();
+			
 			int destId = this.surveyAdminService.getDestinationForSurveyAdmin( request.getHeader( "username" ) );
 			String strDestId = new Integer(destId).toString();
 			
@@ -148,6 +155,7 @@ public class StrokeController
 		return null;
 	}
 	
+	// save Patient
 	@RequestMapping( value = "patient", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
 	public void setPatient( HttpServletRequest request, @RequestBody JsonNode dischargedPatients )
 	{

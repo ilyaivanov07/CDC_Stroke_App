@@ -2,6 +2,8 @@ package edu.gatech.omscs.ihi.service;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.IGenericClient;
 
@@ -10,5 +12,9 @@ public interface ServerConnectionService
 {
 	IGenericClient getConnectionClient( String endpoint );
 
-	FhirContext getFhirContext();	
+	FhirContext getFhirContext();
+
+	JsonNode getStrokeCodesFromStrokeAppServer();
+
+	void pushDataToStrokeAppServer(JsonNode dischargedPatients);	
 }

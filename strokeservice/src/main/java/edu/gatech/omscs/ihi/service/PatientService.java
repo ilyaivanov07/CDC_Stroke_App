@@ -7,9 +7,12 @@ import edu.gatech.omscs.ihi.domain.StrokeCode;
 @Service( value = "PatientService" )
 public interface PatientService
 {
-	Iterable< StrokeCode > getStrokeCodes();
+//	Iterable< StrokeCode > getStrokeCodes();
+//	
+//	boolean authenticate( String username, String password );
+//	
+//	int getDestinationForSurveyAdmin( String username );
 	
-	boolean authenticate( String username, String password );
+	void getPatientsFromFHIR();
 	
-	int getDestinationForSurveyAdmin( String username );
 }
