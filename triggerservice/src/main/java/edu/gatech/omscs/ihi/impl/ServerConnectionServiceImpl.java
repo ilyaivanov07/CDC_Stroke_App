@@ -27,6 +27,11 @@ public class ServerConnectionServiceImpl implements ServerConnectionService
 	
 	private FhirContext context = FhirContext.forDstu2();
 	
+	
+	public void ServerConnectionServiceImpl() {
+		
+	}
+	
 	@Override
 	public FhirContext getFhirContext()
 	{
