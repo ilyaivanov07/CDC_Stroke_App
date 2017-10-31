@@ -7,6 +7,7 @@ angular.module('Home')
 	$scope.orderByField = 'days';
 	$scope.reverseSort = true;
 	$scope.showing = false;
+	$scope.loading = true;
 	
 	$scope.init = function()
 	{
@@ -26,8 +27,7 @@ angular.module('Home')
 		
 		$scope.dataLoading = true;		
 		
-		$http(
-		{
+		$http({
 			method: 'GET',
 			url : '/cdc/api/stroke/patient',
 			headers : 
@@ -36,14 +36,19 @@ angular.module('Home')
 				'password' : $cookies.get( 'password' )
 			}
 		})
-		.success(function (response)
-		{	
+		.success(function (response) {	
 			angular.forEach( response, function( value, key ) 
 			{
 				processDaysSinceDischarge( value );
 				setQRavailable(value);
 			});
 			$scope.patients = response;
+		})
+		.error(function(data, status) {
+			alert('ERROR: ' + status);
+		})		
+		.finally(function() {
+			$scope.loading = false;
 		});
 	};
 	
