@@ -62,14 +62,18 @@ public class Patient implements Serializable
 	
 	
 	public Patient() {}
+
+	public Patient(PatientId patientId) {
+		this.patientId = patientId;
+	}
+	
 	
 	public Patient( PatientId patientId, 
 			String firstName, 
 			String lastName, 
 			Date dischargeDate, 
 			Date admitDate, 
-			String encounterJson)
-	{
+			String encounterJson) {
 		this.patientId = patientId;
 		this.firstName = firstName;
 		this.lastName = lastName;

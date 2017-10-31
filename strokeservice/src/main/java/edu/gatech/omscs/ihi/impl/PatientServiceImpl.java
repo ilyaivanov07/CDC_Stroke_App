@@ -22,6 +22,7 @@ import ca.uhn.fhir.model.primitive.IdDt;
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.client.IGenericClient;
 import edu.gatech.omscs.ihi.domain.id.PatientId;
+import edu.gatech.omscs.ihi.repository.PatientRepository;
 import edu.gatech.omscs.ihi.service.PatientService;
 import edu.gatech.omscs.ihi.service.ServerConnectionService;
 import edu.gatech.omscs.ihi.util.JsonUtils;
@@ -31,6 +32,9 @@ public class PatientServiceImpl implements PatientService {
 
 	@Autowired
 	private ServerConnectionService serverConnectionService;
+	
+	@Autowired 
+	private PatientRepository patientRepository;
 	
 	private ArrayList<String> _strokeCodes = new ArrayList<String>();
 
@@ -140,31 +144,39 @@ public class PatientServiceImpl implements PatientService {
     			//System.out.println("Discharged patient:= " + dischargedPatient.getName().get(0).getFamilyAsSingleString());
     			//IParser parser = this.serverConnectionService.getFhirContext().newJsonParser().setPrettyPrint(true); // setPrettyPrint is optional
     			
-    			String jsonEncounter = "\"\"";  //parser.encodeResourceToString(encounter);
+    			String jsonEncounter = null;  //parser.encodeResourceToString(encounter);
     			
     			//System.out.println("Patients encounter: " + jsonEncounter);
     			
-    			edu.gatech.omscs.ihi.domain.Patient newPatient =  
-    					new edu.gatech.omscs.ihi.domain.Patient( 
-    							new PatientId( dischargedPatient.getId().getIdPart(),
-    									encounter.getId().getIdPart(),
-    									destinationReference.getIdPart() ), 
+    			PatientId patientId = new PatientId(  dischargedPatient.getId().getIdPart(),
+						encounter.getId().getIdPart(),
+						destinationReference.getIdPart());
+
+    			// if patient already exists, skip 	
+    			if (this.patientRepository.exists(patientId)) {
+    				System.out.println("===DEBUG patient exists");
+    				return;
+    			}
+    			
+    			
+    			edu.gatech.omscs.ihi.domain.Patient patient =  
+    					new edu.gatech.omscs.ihi.domain.Patient(
+    							patientId, 
     							dischargedPatient.getName().get(0).getGivenAsSingleString(), 
     							dischargedPatient.getName().get(0).getFamilyAsSingleString(), 
     							new java.sql.Date(endPeriod.getTime()),
     							new java.sql.Date(startPeriod.getTime()),
-    							null); 
+    							jsonEncounter); 
     			
-    			if (newPatient == null) {
-    				System.out.println("===DEBUG newPatient == null");
-    			}
+    			// save patient in strokeapp DB
+    			this.patientRepository.save(patient);
     			
     			//System.out.print("===DEBUG dischargedPatients: ");
-    			JsonNode patientPayload = JsonUtils.convertBeanToJsonNode(newPatient);
+    			//JsonNode patientPayload = JsonUtils.convertBeanToJsonNode(newPatient);
     			//System.out.print(JsonUtils.convertBeanToJsonString(newPatient));
 
     			
-    			this.serverConnectionService.pushDataToStrokeAppServer(patientPayload);				
+    			//this.serverConnectionService.pushDataToStrokeAppServer(patientPayload);				
     		}
 		}
 		catch ( Exception exception )

@@ -1,42 +1,49 @@
 <div data-ng-controller="QuestionnaireController" data-ng-init="init()" style="margin-top:0px;margin-bottom:20px;margin-left:0px;margin-right:0px;">
-	
-	<div class="row" style="border-style:solid;border-width:1px;">
-	<div class="row" style="margin-top:10px;margin-bottom:0px;margin-left:0px;margin-right:0px;">
-		<div class="col-md-10">
-			<h4 style="margin-top:0px;margin-bottom:0px;margin-left:0px;margin-right:0px;">
-				<small>[Selected Patient]</small>{{' ' + selectedPatient.firstName + ' ' + selectedPatient.lastName + ' '}}
-				<small>[MRN #]</small>{{' ' + selectedPatient.patientId.mrn + ' '}}
-				<small>[Encounter ID]</small>{{' ' + selectedPatient.patientId.encounterId + ' '}}
-				<small>[Destination ID]</small>{{' ' + selectedPatient.patientId.destinationId + ' '}}
-			</h4>
-		</div>
-		<div class="col-md-1">
-			<button class="btn btn-primary" type="submit" ng-click="submitForm()">
-				Submit
-			</button>
-		</div>
-		<div class="col-md-1">
-			<button class="btn btn-default" ng-click="cancelForm()">
-				Cancel
-			</button>
-		</div>
-	</div>
-	<div class="row" style="margin-top:0px;margin-bottom:0px;margin-left:0px;margin-right:0px;">
-		<div class="col-md-10">
-			<h4 style="margin-top:0px;margin-bottom:10px;margin-left:0px;margin-right:0px;">
-				<small>[Questionnaire ID]</small>{{' ' + questionnaire.id}}
-			</h4>
-		</div>
-	</div>
-	</div>
-	<div class="row" style="margin-top:20px;margin-bottom:20px;margin-left:0px;margin-right:0px;">
-		<div class="col-md-12">
+
+
+	<div class="row" style="border-style:solid;border-width:0px;">
+		<div class="col-md-8">
 			<h2 style="margin-top:0px;margin-bottom:20px;margin-left:0px;margin-right:0px;text-align: center;">
-				{{' ' + questionnaire.group.title}}
+				{{questionnaire.group.title}}
 			</h2>
+			
+			<div ng-bind-html-compile="questionnaireForm"></div>
 		</div>
+
+        <div class="col-md-4">
+			<div class="sidebar-nav-fixed affix">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                        	Selected Patient: {{' ' + selectedPatient.firstName + ' ' + selectedPatient.lastName + ' '}}
+                        </li>
+                        <li class="list-group-item">
+                        	MRN #: {{' ' + selectedPatient.patientId.mrn + ' '}}
+                        </li>
+                        <li class="list-group-item">
+                        	Encounter ID: {{' ' + selectedPatient.patientId.encounterId + ' '}}
+                        </li>
+                        <li class="list-group-item">
+                        	Destination ID: {{' ' + selectedPatient.patientId.destinationId + ' '}}
+                        </li>
+                        <li class="list-group-item">
+                        	Questionnaire ID: {{questionnaireId}}</li>
+                        <li class="list-group-item">
+                        	<button class="btn btn-primary" type="submit" ng-click="submitForm()">
+								Submit
+							</button>
+                        </li>
+                        <li class="list-group-item">
+							<button class="btn btn-default" ng-click="cancelForm()">
+								Cancel
+							</button>
+                        </li>
+                    </ul>
+			</div>
+		</div>
+
+		
 	</div>
+
     
-	<div ng-bind-html-compile="questionnaireForm"></div>
 		
 </div>

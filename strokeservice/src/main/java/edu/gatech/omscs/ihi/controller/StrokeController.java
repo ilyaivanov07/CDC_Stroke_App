@@ -131,19 +131,21 @@ public class StrokeController
 					String json = questionnaire.getJson();
 					q.setId(id);
 					q.setAnswered(false);
-					
 					JsonNode node = JsonUtils.converStringToJsonNode(json);
 					q.setTitle(node.get("group").get("title").asText());
 					q.setDays(node.get("days").asText());
 					
-					for (Questionnaire answered: answeredQuestionnaires) {
-						System.out.println("answered questionnaire: " + answered.getId());
-						if (answered.getId().equals(id)) {
-							q.setAnswered(true);
-							q.setJson(answered.getJson());
-							break;
+					if (answeredQuestionnaires != null) {
+						for (Questionnaire answered: answeredQuestionnaires) {
+							System.out.println("answered questionnaire: " + answered.getId());
+							if (answered.getId().equals(id)) {
+								q.setAnswered(true);
+								q.setJson(answered.getJson());
+								break;
+							}
 						}
 					}
+					
 					patientQuestionnaires.add(q);
 				}
 				patient.setQuestionnaires(patientQuestionnaires);

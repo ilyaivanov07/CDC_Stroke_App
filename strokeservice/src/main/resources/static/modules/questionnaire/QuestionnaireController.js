@@ -41,7 +41,6 @@ angular.module('Questionnaire')
 	$scope.answers = {};
 	$scope.parentValue = {};
 	$scope.parentKey = {};
-	
 	$scope.optionsCodeAndText = {};
 	
 	var htmlForm = "<form name='questionnaireHtmlForm' ng-submit='submitForm()'>";
@@ -81,7 +80,7 @@ angular.module('Questionnaire')
 		{
 			//var data = response[ response.length - 1 ].json;
 			var data = response.json;
-			
+			$scope.questionnaireId = $rootScope.questionnaire.id;
 			$scope.questionnaire = data;
 			
             angular.forEach( data.group.question, function( qu ) 
@@ -96,7 +95,7 @@ angular.module('Questionnaire')
             
             htmlForm = htmlForm + '</form>';
             
-        		$scope.questionnaireForm = $sce.trustAsHtml( htmlForm );
+        	$scope.questionnaireForm = $sce.trustAsHtml( htmlForm );
 		});
 	};
 	

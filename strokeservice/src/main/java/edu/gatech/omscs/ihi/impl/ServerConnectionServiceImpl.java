@@ -63,7 +63,7 @@ public class ServerConnectionServiceImpl implements ServerConnectionService
 						
 			RestTemplate restTemplate = new RestTemplate();
 			
-			System.out.println("===DEBUG after restTemplate");
+			//System.out.println("===DEBUG after restTemplate");
 //			System.out.print("===DEBUG dischargedPatients: " + dischargedPatients.textValue());
 			
 			restTemplate.postForObject( strokeServiceUrl + API_ENDPOINT + "/patient", request, JsonNode.class );
