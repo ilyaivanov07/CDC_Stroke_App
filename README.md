@@ -1,5 +1,3 @@
-# CDC-Post-Discharge-Stroke-Patient-Data
-
 ## CDC POST DISCHARGE STROKE PATIENT DATA REPORTING APP - PHASE 2
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
