@@ -24,6 +24,11 @@ SMART on FHIR sandboxed server runs on http://localhost:9080
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Notes/Observations #
 
+New functions:
+1. The app now has ability to host multiple questionnaires.  
+2. The list of patients is pulled synchronously from the sandboxed FHIR server. The TriggerService is not used anymore.
+3. The questionnaire box with the "Submit" and "Cancel" buttons is located on the right hand side. It is sticky and does not disappear as the page scrolls up/down.
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
 
 	
