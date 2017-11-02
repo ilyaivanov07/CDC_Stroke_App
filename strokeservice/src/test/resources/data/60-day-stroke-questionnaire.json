@@ -8,7 +8,7 @@
    "days": "60",
    "group":{  
       "linkId":"root",
-      "title":"30 day Stroke Followup Questionnaire",
+      "title":"60 day Stroke Followup Questionnaire",
       "group":[  
          {  
             "linkId":"1",
