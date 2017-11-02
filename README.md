@@ -28,12 +28,12 @@ SMART on FHIR server runs on
 to add patients to the SMART on FHIR server, the following scripts are executed:
 
 /home/student/CDC-Post-Discharge/generated_data/addStrokePatients.sh 
-/home/student/installer/provisioning/examples/tasks/reset-database.sh
-cd /home/student/installer/provisioning
+/home/student/installer/provisioning/examples/tasks/reset-database.sh  
+cd /home/student/installer/provisioning  
 ansible-playbook  -c local -i 'localhost,'  -t 'reset_db,load_patients' smart-on-fhir-servers.yml 
-/home/student/installer/provisioning/smart-on-fhir-servers.yml
+/home/student/installer/provisioning/smart-on-fhir-servers.yml  
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
 'Error connecting to the server: FATAL:  Peer authentication failed for user "postgres"' can be fixed by:
 1. open the file pg_hba.conf in /etc/postgresql/9.x/main
 2. change this line: local   all postgres  **trust**
