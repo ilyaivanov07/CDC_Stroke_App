@@ -1,21 +1,20 @@
 ## CDC POST DISCHARGE STROKE PATIENT DATA REPORTING APP - PHASE 2
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
-to add synthetic patients to the SMART on FHIR server, the following script should be run:
+To add synthetic patients to the SMART on FHIR server, the following script should be run:
 
 /home/student/CDC-Post-Discharge/generated_data/addStrokePatients.sh 
 
-to run the app in the VM:  
+To run the app in the VM:  
 1.   open terminal
 2.   ./start-strokeservice.sh
 
-in the browser, navigate to  http://localhost:8888/  
+In the browser, navigate to  http://localhost:8888/  
 user: admin  
 pwd: password  
 non-admin user: nurse_jane  
 pwd: password
 
-SMART on FHIR server runs on http://localhost:9080  
+SMART on FHIR sandboxed server runs on http://localhost:9080  
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
 'Error connecting to the server: FATAL:  Peer authentication failed for user "postgres"' can be fixed by:
