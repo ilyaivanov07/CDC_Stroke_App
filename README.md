@@ -1,9 +1,5 @@
 ## CDC POST DISCHARGE STROKE PATIENT DATA REPORTING APP - PHASE 2
 
-To add synthetic patients to the SMART on FHIR server, the following script should be run:
-
-/home/student/CDC-Post-Discharge/generated_data/addStrokePatients.sh 
-
 To run the app in the VM:  
 1.   open terminal
 2.   ./start-strokeservice.sh
