@@ -19,12 +19,12 @@ pwd: password
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Notes/Observations #
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
 SMART on FHIR server runs on   
 1. http://localhost:3000/
 2. http://localhost:9080
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
 to add patients to the SMART on FHIR server, the following scripts are executed:
 
 /home/student/CDC-Post-Discharge/generated_data/addStrokePatients.sh 
