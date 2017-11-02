@@ -14,7 +14,7 @@ to run the app in the VM:
 in the browser, navigate to  http://localhost:8888/  
 user: admin  
 pwd: password  
-non-admin user: nurse_jane
+non-admin user: nurse_jane  
 pwd: password
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
