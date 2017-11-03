@@ -11,11 +11,13 @@ public class PatientQuestionnaireId implements Serializable{
 
 	private static final long serialVersionUID = 6767889592230903808L;
 
+	@Column(name = "mrn")
 	private String mrn;
 	@Column(name = "encounter_id")
 	private String encounterId;
 	@Column(name = "destination_id")
 	private String destinationId;
+	@Column(name = "id")
 	private String id;
 	
 

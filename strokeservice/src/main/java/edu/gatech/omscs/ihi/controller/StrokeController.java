@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,9 @@ import edu.gatech.omscs.ihi.util.JsonUtils;
 @RequestMapping( value = "cdc/api/stroke" )
 public class StrokeController
 {
+	@PersistenceContext
+	public EntityManager em;	
+	
 	@Autowired
 	private ServerConnectionService serverConnectionService;
 	
@@ -99,6 +104,7 @@ public class StrokeController
 	}
 	
 	// ***********************************
+	@SuppressWarnings("unchecked")
 	// ***********************************
 	// PATIENT
 	// ***********************************
@@ -122,7 +128,15 @@ public class StrokeController
 			
 			// loop through patients
 			for (Patient patient: patients) {
-				Set<Questionnaire> answeredQuestionnaires = patient.getAnsweredQuestionnaires();
+				
+				
+				List<PatientQuestionnaire> answeredQuestionnaires = null; //patient.getAnsweredQuestionnaires();
+				answeredQuestionnaires = (List<PatientQuestionnaire>)em.createNamedQuery("findPatientQuestionnaires")
+						.setParameter("mrn", patient.getPatientId().getMrn())
+						.setParameter("encounterId", patient.getPatientId().getEncounterId())
+						.setParameter("destinationId", patient.getPatientId().getDestinationId())
+						.getResultList();
+				
 				Set<edu.gatech.omscs.ihi.bean.Questionnaire> patientQuestionnaires = new HashSet<edu.gatech.omscs.ihi.bean.Questionnaire>();
 
 				// loop through all available questionnaires
@@ -139,11 +153,12 @@ public class StrokeController
 					q.setDays(node.get("days").asText());
 					
 					if (answeredQuestionnaires != null) {
-						for (Questionnaire answered: answeredQuestionnaires) {
-							System.out.println("answered questionnaire: " + answered.getId());
-							if (answered.getId().equals(id)) {
+						for (PatientQuestionnaire answered: answeredQuestionnaires) {
+							//System.out.println("answered questionnaire: " + answered.getPatientQuestionnaireId().getId());
+							if (answered.getPatientQuestionnaireId().getId().equals(id)) {
 								q.setAnswered(true);
-								q.setJson(answered.getJson());
+								q.setJson(answered.getQuestionnaireResponseJson());
+								q.setCsv(answered.getQuestionnaireResponseCsv());
 								break;
 							}
 						}

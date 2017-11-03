@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.JoinColumn;
 
 
@@ -33,7 +36,6 @@ public class Patient implements Serializable
 	private PatientId patientId;
 	
 	private String firstName;
-	
 	private String lastName;
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="EST")
@@ -46,17 +48,35 @@ public class Patient implements Serializable
 	@Column( columnDefinition = "TEXT" )
 	private String encounterJson;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="patient_questionnaire",
-    joinColumns= {
-				@JoinColumn(name="destination_id"),
-				@JoinColumn(name="encounter_id"), 
-				@JoinColumn(name="mrn") 
-    			},
-    //foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
-    inverseJoinColumns={@JoinColumn(name="id")})
-	private Set<Questionnaire> answeredQuestionnaires;
 
+//	@OneToMany
+//    @JoinTable(name="patient_questionnaire")
+//	private Set<PatientQuestionnaire> answeredQuestionnaires;
+	
+	
+	//	@OneToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name="patient_questionnaire",
+//    joinColumns= {
+//				@JoinColumn(name="destination_id"),
+//				@JoinColumn(name="encounter_id"), 
+//				@JoinColumn(name="mrn")
+//    			})
+//	private Set<PatientQuestionnaire> answeredQuestionnaires;
+	
+
+//	@ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name="patient_questionnaire",
+//    joinColumns= {
+//				@JoinColumn(name="destination_id"),
+//				@JoinColumn(name="encounter_id"), 
+//				@JoinColumn(name="mrn"),
+//    			},
+//    inverseJoinColumns={@JoinColumn(name="id")})
+//	private Set<Questionnaire> answeredQuestionnaires;
+
+//	private Set<PatientQuestionnaire> answeredQuestionnaires = null;
+	
+	
 	@Transient
 	private Set<edu.gatech.omscs.ihi.bean.Questionnaire> questionnaires;
 	
@@ -144,13 +164,10 @@ public class Patient implements Serializable
 	}
 
 	
-	public Set<Questionnaire> getAnsweredQuestionnaires() {
-		return answeredQuestionnaires;
-	}
+//	public Set<PatientQuestionnaire> getAnsweredQuestionnaires() {
+//		return answeredQuestionnaires;
+//	}
 
-	public void setAnsweredQuestionnaires(Set<Questionnaire> questionnaires) {
-		this.answeredQuestionnaires = questionnaires;
-	}
 	
 	public Set<edu.gatech.omscs.ihi.bean.Questionnaire> getQuestionnaires() {
 		return questionnaires;

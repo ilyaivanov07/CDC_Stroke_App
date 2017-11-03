@@ -14,6 +14,11 @@ import edu.gatech.omscs.ihi.domain.id.PatientQuestionnaireId;
 
 @Entity
 @Table(name = "patient_questionnaire")
+@NamedQuery(
+	name = "findPatientQuestionnaires",
+	query = "SELECT questionnaireResponseJson, questionnaireResponseCsv "
+	+ " FROM PatientQuestionnaire WHERE mrn=:mrn AND encounter_id=:encounterId AND destination_id=:destinationId")
+
 public class PatientQuestionnaire implements Serializable {
 
 	private static final long serialVersionUID = 5169327870526300542L;

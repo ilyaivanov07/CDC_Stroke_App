@@ -6,11 +6,18 @@ public class Questionnaire implements java.io.Serializable {
 
 	private String id;
 	private String json;
+	private String csv;
 	private Boolean answered;
 	private String title;
 	private String days;
 	private Boolean isActive;
 	
+	public String getCsv() {
+		return csv;
+	}
+	public void setCsv(String csv) {
+		this.csv = csv;
+	}
 	public String getId() {
 		return id;
 	}
