@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NamedQuery;
+
 import com.fasterxml.jackson.annotation.JsonRawValue;
 import edu.gatech.omscs.ihi.domain.id.PatientQuestionnaireId;
 

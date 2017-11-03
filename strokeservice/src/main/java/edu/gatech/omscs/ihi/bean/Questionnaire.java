@@ -9,6 +9,7 @@ public class Questionnaire implements java.io.Serializable {
 	private Boolean answered;
 	private String title;
 	private String days;
+	private Boolean isActive;
 	
 	public String getId() {
 		return id;
@@ -39,6 +40,12 @@ public class Questionnaire implements java.io.Serializable {
 	}
 	public void setDays(String days) {
 		this.days = days;
+	}
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

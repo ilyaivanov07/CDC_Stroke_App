@@ -18,9 +18,10 @@
 		
 		<thead>
 			<tr>
-				<th style="width:5%"><h4>#</h4></th>
-				<th style="width:40%"><h4>Questionnaire Schema Id</h4></th>
-				<th style="width:5%"><h4>Delete</h4></th>
+				<th><h4>#</h4></th>
+				<th><h4>Questionnaire Schema Id</h4></th>
+				<th><h4>Is Active</h4></th>
+				<th><h4>Delete</h4></th>
 			</tr>
 		</thead>
 		
@@ -28,6 +29,7 @@
 			<tr ng-repeat="d in data">
 				<td>{{$index + 1}}</td>
 				<td>{{d.json.group.title}}</td>
+				<td><input type="checkbox" ng-checked="d.isActive" ng-click="updateSchema(d.id, $event)" ></td>
 				<td>
 					<a href ng-click="deleteSchema(d.id)">
 						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

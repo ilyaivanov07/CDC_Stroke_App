@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -131,6 +132,8 @@ public class StrokeController
 					String json = questionnaire.getJson();
 					q.setId(id);
 					q.setAnswered(false);
+					q.setIsActive(questionnaire.getIsActive());
+
 					JsonNode node = JsonUtils.converStringToJsonNode(json);
 					q.setTitle(node.get("group").get("title").asText());
 					q.setDays(node.get("days").asText());
@@ -185,83 +188,86 @@ public class StrokeController
 	// ***********************************
 	// ***********************************
 	
+	// create questionnaire
 	@RequestMapping( value = "questionnaire", method = RequestMethod.POST )
-	public void uploadQuestionnaire( HttpServletRequest request, @RequestParam( "file" ) MultipartFile file )
-	{
-		if ( checkCredentials( request) )
-		{
-			try
-			{
+	public void uploadQuestionnaire( HttpServletRequest request, @RequestParam( "file" ) MultipartFile file ) {
+		if ( checkCredentials( request) ) {
+			try {
 				String testId = file.getOriginalFilename();
 				testId = file.getOriginalFilename().substring( 0, testId.lastIndexOf( "." ) );
-				
 				ByteArrayInputStream stream = new ByteArrayInputStream( file.getBytes() );
 				
 				String json_resource = IOUtils.toString( stream, "UTF-8" );
 				
 				// Save Questionnaire to FHIR
 				String fhirId = this.fhirResource.updateResource("Questionnaire", json_resource);
-				
 				// Save Questionnaire to localdb
-				this.questionnaireRepository.save( new Questionnaire( fhirId, json_resource ) );
-				
+				this.questionnaireRepository.save( new Questionnaire(fhirId, json_resource, true) );
 			}
-			catch ( Exception exp )
-			{
+			catch ( Exception exp ) {
 				exp.printStackTrace();
 			}
 		}
 	}
+
 	
+	// get a specific questionnaire
 	@RequestMapping( value = "questionnaire", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
-	public JsonNode getQuestionnaireJson( HttpServletRequest request, @RequestParam( "questionnaireId" ) String questionnaireId)
-	{
+	public JsonNode getQuestionnaireJson( HttpServletRequest request, @RequestParam( "questionnaireId" ) String questionnaireId) {
 		if ( checkCredentials( request) )
 		{			
 			return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findOne(questionnaireId));
-			//return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findAll() );
 		}
-		
 		return null;
 	}
 	
-	@RequestMapping( value = "questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
-	public JsonNode getQuestionnaireJson( HttpServletRequest request)
-	{
-		if ( checkCredentials( request) )
-		{			
-			return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findAll() );
+
+	// update questionnaire's isActive field
+	@RequestMapping( value = "updatequestionnaire/{id}/{isActive}", method = {RequestMethod.PUT, RequestMethod.GET})
+	public void updateQuestionnaire(HttpServletRequest request, @PathVariable("id") String questionnaireId, @PathVariable("isActive") Boolean isActive) {
+		//System.out.println("update questionnaire called with id: " + questionnaireId + " and isActive = " + isActive.toString());
+		if (checkCredentials(request)) {
+			Questionnaire q = this.questionnaireRepository.findOne(questionnaireId);
+			q.setIsActive(isActive);
+			this.questionnaireRepository.save(q);
 		}
-		
-		return null;
+	}
+	
+	
+	// delete questionnaire
+	@RequestMapping( value = "questionnaire/{id}", method = RequestMethod.DELETE )
+	public void deleteQuestionnaire( HttpServletRequest request, @PathVariable( "id" ) String questionnaireId ) {
+		//System.out.println("delete questionnaire called with id: " + questionnaireId);
+		if ( checkCredentials( request) ) {
+			// delete from StrokeApp DB
+			this.questionnaireRepository.delete( questionnaireId );
+			// delete from FHIR
+			this.fhirResource.deleteFhirResource("Questionnaire", questionnaireId);
+		}
 	}
 
 	
-	
-	@RequestMapping( value = "questionnaire/{id}", method = RequestMethod.DELETE )
-	public void deleteQuestionnaire( HttpServletRequest request, @PathVariable( "id" ) String questionnaireId )
-	{
-		// Delete from strokeapp db
-		System.out.println("delete questionnaire called with id: " + questionnaireId);
-		if ( checkCredentials( request) )
-		{
-			this.questionnaireRepository.delete( questionnaireId );
+	// get all questionnaires
+	@RequestMapping( value = "questionnaires", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
+	public JsonNode getQuestionnaireJson( HttpServletRequest request) {
+		if ( checkCredentials( request) ) {			
+			return JsonUtils.convertBeanToJsonNode( this.questionnaireRepository.findAll(new Sort(Sort.Direction.DESC, "id")) );
 		}
 		
-		this.fhirResource.deleteFhirResource("Questionnaire", questionnaireId);
-		
+		return null;
 	}
+	
 	
 	// ***********************************
 	// ***********************************
 	// QUESTIONNAIRE RESPONSE
 	// ***********************************
 	// ***********************************
-	@RequestMapping( value = "questionnaire-response", method = RequestMethod.GET )
-	public JsonNode getQuestionnaireResponse( HttpServletRequest request, @PathVariable( "id" ) String questionnaireId )
-	{
-		return null;
-	}
+//	@RequestMapping( value = "questionnaire-response", method = RequestMethod.GET )
+//	public JsonNode getQuestionnaireResponse( HttpServletRequest request, @PathVariable( "id" ) String questionnaireId )
+//	{
+//		return null;
+//	}
 	
 	
 	
@@ -351,13 +357,6 @@ public class StrokeController
 			    
 			    // Push QuestionnaireResponse to FHIR
 			    String qrId = this.fhirResource.updateResource("QuestionnaireResponse", encoded);
-			    
-			    // getting strokapp patient given mrn
-			    //Patient toUpdate = this.patientRepository.findOne(new PatientId(mrn, encounterId, destinationId));
-			    //toUpdate.setQuestionnaireResponseId(qrId);
-			    //toUpdate.setQuestionnaireResponseJson(encoded);
-			    //toUpdate.setQuestionnaireResponseCsv(csv.toString());
-			    //this.patientRepository.save(toUpdate);
 			    
 			    // save PatientQuestionnaire in DB
 			    PatientQuestionnaireId patientQuestionnaireId = new PatientQuestionnaireId(mrn, encounterId, destinationId, questionnaireId);

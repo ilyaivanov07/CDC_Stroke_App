@@ -44,10 +44,8 @@ angular.module('Admin')
 	
 	$scope.updateSchemas();
 	
-	$scope.uploadFile = function(file)
-	{
-		if (file)
-		{
+	$scope.uploadFile = function(file) {
+		if (file) {
 			file.upload = Upload.upload(
 			{
 				url : 'cdc/api/stroke/questionnaire',
@@ -71,22 +69,35 @@ angular.module('Admin')
 			});
 		});
 	};
+
 	
-	$scope.deleteSchema = function(id)
-	{
-		$http(
-		{
-			method: 'DELETE',
-			url : 'cdc/api/stroke/questionnaire/' + id,
-			headers : 
-			{
+	$scope.updateSchema = function(id, $event) {
+		$http({
+			method: 'PUT',
+			url : 'cdc/api/stroke/updatequestionnaire/' + id + '/' + $event.target.checked,
+			headers : {
 				'username' : $cookies.get( 'username' ), 
 				'password' : $cookies.get( 'password' )
 			}
 		})
-		.success(function()
-		{
+		.success(function(){
 			$scope.updateSchemas();
 		});
 	};
+	
+	
+	$scope.deleteSchema = function(id) {
+		$http({
+			method: 'DELETE',
+			url : 'cdc/api/stroke/questionnaire/' + id,
+			headers : {
+				'username' : $cookies.get( 'username' ), 
+				'password' : $cookies.get( 'password' )
+			}
+		})
+		.success(function(){
+			$scope.updateSchemas();
+		});
+	};
+	
 }]);

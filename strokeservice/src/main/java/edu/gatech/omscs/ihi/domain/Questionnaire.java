@@ -19,18 +19,19 @@ public class Questionnaire implements Serializable
 	private String id;
 
 	@JsonRawValue
-	@Column( columnDefinition = "TEXT" )
+	@Column(columnDefinition = "TEXT")
 	private String json;
+
+	@Column(columnDefinition = "BOOLEAN")
+	private Boolean isActive;
+
+
+	public Questionnaire() { } // default constructor must be present
 	
-	public Questionnaire()
-	{
-		
-	}
-	
-	public Questionnaire( String id, String json )
-	{
+	public Questionnaire(String id, String json, Boolean isActive) {
 		this.id = id;
 		this.json = json;
+		this.isActive = isActive;
 	}
 	
 	public String getId() 
@@ -52,4 +53,14 @@ public class Questionnaire implements Serializable
 	{
 		this.json = json;
 	}
+	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	
+	
 }
