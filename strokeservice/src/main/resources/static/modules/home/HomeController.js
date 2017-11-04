@@ -75,23 +75,23 @@ angular.module('Home')
 	}
 	
 	
-	$scope.downloadQuestionnaireResponseJSON =  function(patient)
+	$scope.downloadQuestionnaireResponseJSON =  function(patient, json)
 	{
-		var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(patient.qresponse));
+		var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json));
 		var dlAnchorElem = document.getElementById('downloadAnchorElem');
 		dlAnchorElem.setAttribute("href",     dataStr     );
 		dlAnchorElem.setAttribute("download", patient.firstName + "_" + patient.lastName +  ".json");
 		dlAnchorElem.click();
 	}
 	
-	$scope.downloadQuestionnaireResponseCSV =  function(patient)
+	$scope.downloadQuestionnaireResponseCSV =  function(patient, csv)
 	{		
 		var anchor = angular.element('<a/>');
 		anchor.css({display: 'none'}); // Make sure it's not visible
 		angular.element(document.body).append(anchor); // Attach to document
 
 		anchor.attr({
-		    href: 'data:attachment/csv;charset=utf-8,' + encodeURI(patient.questionnaireResponseCsv),
+		    href: 'data:attachment/csv;charset=utf-8,' + encodeURI(csv),
 		    target: '_blank',
 		    download: patient.firstName + '_' + patient.lastName + '.csv'
 		})[0].click();

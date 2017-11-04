@@ -48,33 +48,16 @@ public class Patient implements Serializable
 	@Column( columnDefinition = "TEXT" )
 	private String encounterJson;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="patient_questionnaire",
+    joinColumns= {
+				@JoinColumn(name="destination_id"),
+				@JoinColumn(name="encounter_id"), 
+				@JoinColumn(name="mrn"),
+    			},
+    inverseJoinColumns={@JoinColumn(name="id")})
+	private Set<Questionnaire> answeredQuestionnaires;
 
-//	@OneToMany
-//    @JoinTable(name="patient_questionnaire")
-//	private Set<PatientQuestionnaire> answeredQuestionnaires;
-	
-	
-	//	@OneToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name="patient_questionnaire",
-//    joinColumns= {
-//				@JoinColumn(name="destination_id"),
-//				@JoinColumn(name="encounter_id"), 
-//				@JoinColumn(name="mrn")
-//    			})
-//	private Set<PatientQuestionnaire> answeredQuestionnaires;
-	
-
-//	@ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name="patient_questionnaire",
-//    joinColumns= {
-//				@JoinColumn(name="destination_id"),
-//				@JoinColumn(name="encounter_id"), 
-//				@JoinColumn(name="mrn"),
-//    			},
-//    inverseJoinColumns={@JoinColumn(name="id")})
-//	private Set<Questionnaire> answeredQuestionnaires;
-
-//	private Set<PatientQuestionnaire> answeredQuestionnaires = null;
 	
 	
 	@Transient
@@ -164,9 +147,9 @@ public class Patient implements Serializable
 	}
 
 	
-//	public Set<PatientQuestionnaire> getAnsweredQuestionnaires() {
-//		return answeredQuestionnaires;
-//	}
+	public Set<Questionnaire> getAnsweredQuestionnaires() {
+		return answeredQuestionnaires;
+	}
 
 	
 	public Set<edu.gatech.omscs.ihi.bean.Questionnaire> getQuestionnaires() {

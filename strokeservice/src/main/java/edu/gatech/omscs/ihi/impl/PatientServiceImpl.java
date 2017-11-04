@@ -100,7 +100,7 @@ public class PatientServiceImpl implements PatientService {
     	cal.add( Calendar.DAY_OF_MONTH, - days );
 		Date daysAgo = cal.getTime();
 
-		System.out.println("===DEBUG: processEncounter() ");
+		//System.out.println("===DEBUG: processEncounter() ");
 		
 		try
 		{
@@ -117,7 +117,7 @@ public class PatientServiceImpl implements PatientService {
 			Date endPeriod = encounter.getPeriod().getEnd();
 			if ( endPeriod.before( daysAgo ) )
 			{
-				System.out.println("===DEBUG: endPeriod.before( daysAgo ), endPeriod: " + endPeriod.toString() + ", daysAgo: " + daysAgo.toString());
+				//System.out.println("===DEBUG: endPeriod.before( daysAgo ), endPeriod: " + endPeriod.toString() + ", daysAgo: " + daysAgo.toString());
 				return;
 			}
 			
@@ -154,7 +154,7 @@ public class PatientServiceImpl implements PatientService {
 
     			// if patient already exists, skip 	
     			if (this.patientRepository.exists(patientId)) {
-    				System.out.println("===DEBUG patient exists");
+    				//System.out.println("===DEBUG patient exists");
     				return;
     			}
     			

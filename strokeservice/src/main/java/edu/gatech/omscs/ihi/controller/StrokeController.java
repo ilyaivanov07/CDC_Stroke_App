@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,16 +127,24 @@ public class StrokeController
 
 			List<Patient> patients = (List<Patient>)this.patientRepository.findAllPatientsByDestinationId( strDestId );
 			
+			String queryString = "SELECT p FROM PatientQuestionnaire p WHERE p.patientQuestionnaireId.id = :id AND p.patientQuestionnaireId.mrn = :mrn AND p.patientQuestionnaireId.encounterId = :encounterId AND p.patientQuestionnaireId.destinationId = :destinationId";
+			TypedQuery<PatientQuestionnaire> p = em.createQuery(queryString, PatientQuestionnaire.class);
+			
 			// loop through patients
 			for (Patient patient: patients) {
 				
+				 
+				Set<Questionnaire> answeredQuestionnaires = patient.getAnsweredQuestionnaires();
 				
-				List<PatientQuestionnaire> answeredQuestionnaires = null; //patient.getAnsweredQuestionnaires();
-				answeredQuestionnaires = (List<PatientQuestionnaire>)em.createNamedQuery("findPatientQuestionnaires")
-						.setParameter("mrn", patient.getPatientId().getMrn())
-						.setParameter("encounterId", patient.getPatientId().getEncounterId())
-						.setParameter("destinationId", patient.getPatientId().getDestinationId())
-						.getResultList();
+//				answeredQuestionnaires = (List<PatientQuestionnaire>)em.createNamedQuery("findPatientQuestionnaires")
+//						.setParameter("mrn", patient.getPatientId().getMrn())
+//						.setParameter("encounterId", patient.getPatientId().getEncounterId())
+//						.setParameter("destinationId", patient.getPatientId().getDestinationId())
+//						.getResultList();
+				
+//				System.out.println("answeredQuestionnaires.size(): " + answeredQuestionnaires.size());
+//				System.out.println("answeredQuestionnaires.get(0): " + answeredQuestionnaires.get(0).getQuestionnaireResponseCsv());
+				
 				
 				Set<edu.gatech.omscs.ihi.bean.Questionnaire> patientQuestionnaires = new HashSet<edu.gatech.omscs.ihi.bean.Questionnaire>();
 
@@ -153,12 +162,22 @@ public class StrokeController
 					q.setDays(node.get("days").asText());
 					
 					if (answeredQuestionnaires != null) {
-						for (PatientQuestionnaire answered: answeredQuestionnaires) {
+						for (Questionnaire answered: answeredQuestionnaires) {
 							//System.out.println("answered questionnaire: " + answered.getPatientQuestionnaireId().getId());
-							if (answered.getPatientQuestionnaireId().getId().equals(id)) {
+							// if questionnaire was submitted
+							if (answered.getId().equals(id)) {
+								
+								List<PatientQuestionnaire> ques = p
+								.setParameter("id", id)
+								.setParameter("mrn", patient.getPatientId().getMrn())
+								.setParameter("encounterId", patient.getPatientId().getEncounterId())
+								.setParameter("destinationId", patient.getPatientId().getDestinationId())
+								.getResultList();
+
 								q.setAnswered(true);
-								q.setJson(answered.getQuestionnaireResponseJson());
-								q.setCsv(answered.getQuestionnaireResponseCsv());
+								q.setJson(ques.get(0).getQuestionnaireResponseJson());
+								q.setCsv(ques.get(0).getQuestionnaireResponseCsv());
+								//System.out.println("===DEBUG: ques.get(0).getQuestionnaireResponseCsv() " + ques.get(0).getQuestionnaireResponseCsv());
 								break;
 							}
 						}
