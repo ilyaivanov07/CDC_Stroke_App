@@ -153,10 +153,10 @@ public class PatientServiceImpl implements PatientService {
 						destinationReference.getIdPart());
 
     			// if patient already exists, skip 	
-    			if (this.patientRepository.exists(patientId)) {
+    			//if (this.patientRepository.exists(patientId)) {
     				//System.out.println("===DEBUG patient exists");
-    				return;
-    			}
+    			//	return;
+    			//}
     			
     			
     			edu.gatech.omscs.ihi.domain.Patient patient =  

@@ -68,23 +68,20 @@ public class StartupListener implements ApplicationListener< ContextRefreshedEve
 		this.destinationRepository.save( new Destination( 0, "Patient residence", 0 ) );
 		
 		//Dummy patients
-		//this.patientRepositry.save(new Patient(new PatientId("99900004","1039","1"),"Steve", "Waugh",new Date(2016-1900,10,20),new Date(2016-1900,10,13), "{}","","{}","One, Two, Three" ));
-		this.patientRepositry.save(new Patient(new PatientId("99900005","1040","2"),"Mark", "Waugh",new Date(2016-1900,10,21),new Date(2016-1900,10,14), "{}" ));
+		this.patientRepositry.save(new Patient(new PatientId("99900005","1040","1"),"Mark", "Waugh",new Date(2016-1900,10,21),new Date(2016-1900,10,14), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900006","1041","3"),"Graham", "Thorpe",new Date(2016-1900,10,22),new Date(2016-1900,10,15), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900007","1042","4"),"Nasser", "Hussain",new Date(2016-1900,10,23),new Date(2016-1900,10,16), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900008","1043","5"),"Pat", "Symcox",new Date(2016-1900,10,24),new Date(2016-1900,10,17), "{}" ));
-		this.patientRepositry.save(new Patient(new PatientId("99900009","1044","1"),"Priyanka", "Chopra",new Date(2016-1900,10,25),new Date(2016-1900,10,18), "{}" ));
-		//this.patientRepositry.save(new Patient(new PatientId("99900010","1045","1"),"Kristen", "Stewart",new Date(2016-1900,10,26),new Date(2016-1900,10,19), "{}","","{}","Four,Five,Six" ));
+		this.patientRepositry.save(new Patient(new PatientId("99900009","1044","1"),"Priyanka", "Chopra",new Date(2017-1900,10,25),new Date(2017-1900,10,18), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900011","1046","2"),"Selena", "Gomez",new Date(2016-1900,10,27),new Date(2016-1900,10,20), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900012","1047","3"),"Emma", "Watson",new Date(2016-1900,10,28),new Date(2016-1900,10,21), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900013","1048","4"),"Deepika", "Padukone",new Date(2016-1900,10,29),new Date(2016-1900,10,22), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900014","1049","5"),"Donald", "Trump",new Date(2016-1900,10,30),new Date(2016-1900,10,23), "{}" ));
-		//this.patientRepositry.save(new Patient(new PatientId("99900015","1050","1"),"Barack", "Obama",new Date(2016-1900,9,20),new Date(2016-1900,9,13), "{}","12344555","{}","Seven,Eight,Nine" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900016","1051","2"),"George", "Bush",new Date(2016-1900,9,21),new Date(2016-1900,9,14), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900017","1052","3"),"Ronald", "Reagan",new Date(2016-1900,9,22),new Date(2016-1900,9,15), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900018","1053","4"),"Bill", "Clinton",new Date(2016-1900,9,23),new Date(2016-1900,9,16), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900019","1054","5"),"Jonny", "Quest",new Date(2016-1900,9,24),new Date(2016-1900,9,17), "{}" ));
-		this.patientRepositry.save(new Patient(new PatientId("99900020","1055","1"),"Fred", "Flinstone",new Date(2016-1900,9,25),new Date(2016-1900,9,18), "{}" ));
+		this.patientRepositry.save(new Patient(new PatientId("99900020","1055","1"),"Fred", "Flinstone",new Date(2017-1900,9,25),new Date(2017-1900,9,18), "{}" ));
 		this.patientRepositry.save(new Patient(new PatientId("99900021","1056","2"),"Dexter", "McPherson",new Date(2016-1900,9,26),new Date(2016-1900,9,19), "{}" ));
 		
 		// Hemorrhagic and Ischemic Stroke (The Joint Commission)
@@ -115,7 +112,6 @@ public class StartupListener implements ApplicationListener< ContextRefreshedEve
 		this.strokeCodeRepository.save( new StrokeCode( "I616" ) );
 		this.strokeCodeRepository.save( new StrokeCode( "I618" ) );
 		this.strokeCodeRepository.save( new StrokeCode( "I619" ) );
-		
 		this.strokeCodeRepository.save( new StrokeCode( "I6300" ) );
 		this.strokeCodeRepository.save( new StrokeCode( "I63011" ) );
 		this.strokeCodeRepository.save( new StrokeCode( "I63012" ) );
