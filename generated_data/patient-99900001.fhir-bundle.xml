@@ -9,7 +9,7 @@
     <text>
       <status value="generated"/>
       <div xmlns="http://www.w3.org/1999/xhtml">
-        <p>Bruce Wayne</p>
+        <p>Sponge Bob</p>
       </div>
     </text>
     <identifier>
@@ -27,20 +27,20 @@
     </identifier>
     <name>
       <use value="official"/>
-      <family value="Wayne"/>
-      <given value="Bruce"/>
+      <family value="Bob"/>
+      <given value="Sponge"/>
     </name>
     <telecom>
       <system value="phone"/>
-      <value value="800-834-9387"/>
+      <value value="800-834-9386"/>
       <use value="home"/>
     </telecom>
     <telecom>
       <system value="email"/>
-      <value value="bruce.wayne@example.com"/>
+      <value value="clark.kent@example.com"/>
     </telecom>
     <gender value="male" />
-    <birthDate value="1975-10-26" />
+    <birthDate value="1980-08-18" />
     <address>
       <use value="home"/>
       <line value="17 Oak Rd"/>
@@ -65,7 +65,7 @@
     
     
     <Encounter>
-  <id value="1037"/>
+  <id value="1036"/>
       <text>
         <status value="generated"/>
         <div xmlns="http://www.w3.org/1999/xhtml">2016-09-12T04:00:00Z: inpatient encounter - hemorrhage</div>
@@ -76,26 +76,26 @@
         <reference value="Patient/99900001"/>
       </patient>
       <period>
-       <start value="2016-09-12T04:00:00Z"/>
-       <end value="2016-09-20T04:20:00Z"/>
+       <start value="2017-09-12T04:00:00Z"/>
+       <end value="2017-10-01T04:20:00Z"/>
       </period>
       
       <reason>
        <coding>
           <system value="http://hl7.org/fhir/sid/icd-10"/>
-          <code value="I63012"/>
-          <display value="Cerebral infarction due to thrombosis of left vertebral artery"/>
+          <code value="I6000"/>
+          <display value="Nontraumatic subarachnoid hemorrhage from unspecified carotid siphon and bifurcation"/>
        </coding>
       </reason> 
 <!--   No indication, because no referral took place   -->
  <hospitalization> 
  <dischargeDiagnosis>
-    <reference value="Condition/559"/>
+    <reference value="Condition/557"/>
  </dischargeDiagnosis> 
-  <destination>
-    <reference value="Location/4" />
+ <destination>
+    <reference value="Location/1" />
  </destination>
- 
+  
   
   
   
@@ -116,10 +116,10 @@
  
  
  <Condition>
-  <id value="559"/>
+  <id value="557"/>
     <text>
      <status value="generated"/>
-     <div xmlns="http://www.w3.org/1999/xhtml">Cerebral infarction due to thrombosis of left vertebral artery</div>   
+     <div xmlns="http://www.w3.org/1999/xhtml">Nontraumatic subarachnoid hemorrhage from unspecified carotid siphon and bifurcation</div>   
    </text>
     <patient>
       <reference value="Patient/99900001"/>
@@ -127,10 +127,10 @@
     <code> 
       <coding>
         <system value="http://hl7.org/fhir/sid/icd-10"/>
-        <code value="I63012"/>
-        <display value="Cerebral infarction due to thrombosis of left vertebral artery"/>
+        <code value="I6000"/>
+        <display value="Nontraumatic subarachnoid hemorrhage from unspecified carotid siphon and bifurcation"/>
       </coding>
-      <text value="Cerebral infarction due to thrombosis of left vertebral artery"/>
+      <text value="Nontraumatic subarachnoid hemorrhage from unspecified carotid siphon and bifurcation"/>
     </code>
    <clinicalStatus value="confirmed"/>
    <onsetDateTime value="2016-09-12T04:00:00Z"/>
@@ -140,7 +140,7 @@
   </resource>
   <request>
     <method value="PUT"/>
-    <url value="Condition/559"/>
+    <url value="Condition/557"/>
   </request>
 </entry>
  
@@ -151,7 +151,7 @@
   <id value="558"/>
     <text>
      <status value="generated"/>
-     <div xmlns="http://www.w3.org/1999/xhtml">Localized, primary osteoarthritis of the lower leg</div>   
+     <div xmlns="http://www.w3.org/1999/xhtml">foreign body in larynx</div>   
    </text>
     <patient>
       <reference value="Patient/99900001"/>
@@ -159,19 +159,199 @@
     <code> 
       <coding>
         <system value="http://snomed.info/sct"/>
-        <code value="201836008"/>
-        <display value="Localized, primary osteoarthritis of the lower leg"/>
+        <code value="425229001"/>
+        <display value="foreign body in larynx"/>
       </coding>
-      <text value="Localized, primary osteoarthritis of the lower leg"/>
+      <text value="foreign body in larynx"/>
     </code>
    <clinicalStatus value="confirmed"/>
-   <onsetDateTime value="2007-10-28"/>
+   <onsetDateTime value="2008-10-06"/>
    
   </Condition>
   </resource>
   <request>
     <method value="PUT"/>
-    <url value="Condition/560"/>
+    <url value="Condition/558"/>
+  </request>
+</entry>
+
+
+<!-- Piggy back on this patient record to also load Locations -->
+
+<!-- Patients Home -->
+<entry>
+  <resource>
+
+ <Location xmlns="http://hl7.org/fhir">
+  <id value="0"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Patient's Home</div>
+  </text>  
+  <status value="active"/>
+  <name value="Patient's Home"/>
+  <description value="Patient's Home"/>
+  <mode value="kind"/>
+  <type>
+    <coding>
+      <system value="http://hl7.org/fhir/v3/RoleCode"/>
+      <code value="PTRES"/>
+      <display value="Patient's Residence"/>
+    </coding>
+  </type>
+  <physicalType>
+    <coding>
+      <system value="http://hl7.org/fhir/location-physical-type"/>
+      <code value="ho"/>
+      <display value="House"/>
+    </coding>
+  </physicalType>  
+</Location>
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="Location/0"/>
+  </request>
+</entry>
+
+<!-- City Regional Hospital -->
+<entry>
+  <resource>
+
+<Location xmlns="http://hl7.org/fhir">
+  <id value="1"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">City Regional Hospital</div>
+  </text>  
+  <status value="active"/>
+  <name value="City Regional Hospital"/>
+  <description value="City Regional Hospital"/>
+  <mode value="kind"/>
+  <physicalType>
+     <coding>
+      <system value="http://hl7.org/fhir/location-physical-type"/>
+      <code value="bu"/>
+      <display value="Building"/>
+    </coding>
+  </physicalType>  
+</Location>
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="Location/1"/>
+  </request>
+</entry>
+
+<!-- Citizens Acute Care Center -->
+<entry>
+  <resource>
+<Location xmlns="http://hl7.org/fhir">
+  <id value="2"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Citizens Acute Care Center</div>
+  </text>  
+  <status value="active"/>
+  <name value="Citizens Acute Care Center"/>
+  <description value="Citizens Acute Care Center"/>
+  <mode value="kind"/>
+  <physicalType>
+     <coding>
+      <system value="http://hl7.org/fhir/location-physical-type"/>
+      <code value="bu"/>
+      <display value="Building"/>
+    </coding>
+  </physicalType>  
+</Location>
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="Location/2"/>
+  </request>
+</entry>
+
+<!-- Century Assissted Living and Long Term Care -->
+<entry>
+  <resource>
+ <Location xmlns="http://hl7.org/fhir">
+  <id value="3"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Century Assissted Living and Long Term Care</div>
+  </text>  
+  <status value="active"/>
+  <name value="Century Assissted Living and Long Term Care"/>
+  <description value="Century Assissted Living and Long Term Care"/>
+  <mode value="kind"/>
+  <physicalType>
+     <coding>
+      <system value="http://hl7.org/fhir/location-physical-type"/>
+      <code value="bu"/>
+      <display value="Building"/>
+    </coding>
+  </physicalType>  
+</Location>
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="Location/3"/>
+  </request>
+</entry>
+
+<!-- Strength Physical Therapy Center -->
+<entry>
+  <resource>
+<Location xmlns="http://hl7.org/fhir">
+  <id value="4"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Strength Physical Therapy Center</div>
+  </text>  
+  <status value="active"/>
+  <name value="Strength Physical Therapy Center"/>
+  <description value="Strength Physical Therapy Center"/>
+  <mode value="kind"/>
+  <physicalType>
+     <coding>
+      <system value="http://hl7.org/fhir/location-physical-type"/>
+      <code value="bu"/>
+      <display value="Building"/>
+    </coding>
+  </physicalType>  
+</Location>
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="Location/4"/>
+  </request>
+</entry>
+
+<!-- National Health Facility -->
+<entry>
+  <resource>
+ <Location xmlns="http://hl7.org/fhir">
+  <id value="5"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">National Health Facility</div>
+  </text>  
+  <status value="active"/>
+  <name value="National Health Facility"/>
+  <description value="National Health Facility"/>
+  <mode value="kind"/>
+  <physicalType>
+     <coding>
+      <system value="http://hl7.org/fhir/location-physical-type"/>
+      <code value="bu"/>
+      <display value="Building"/>
+    </coding>
+  </physicalType>  
+</Location>
+  </resource>
+  <request>
+    <method value="PUT"/>
+    <url value="Location/5"/>
   </request>
 </entry>
 

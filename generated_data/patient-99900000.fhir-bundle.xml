@@ -76,8 +76,8 @@
         <reference value="Patient/99900000"/>
       </patient>
       <period>
-       <start value="2016-09-12T04:00:00Z"/>
-       <end value="2016-09-20T04:20:00Z"/>
+       <start value="2017-09-12T04:00:00Z"/>
+       <end value="2017-10-20T04:20:00Z"/>
       </period>
       
       <reason>
@@ -100,7 +100,9 @@
   
   
  </hospitalization>
- </Encounter>
+      
+      
+    </Encounter>
   
   </resource>
   <request>
@@ -142,7 +144,7 @@
   </request>
 </entry>
  
-<entry>
+  <entry>
   <resource>
  
  <Condition>
@@ -166,13 +168,11 @@
    <onsetDateTime value="2008-10-06"/>
    
   </Condition>
-
   </resource>
   <request>
     <method value="PUT"/>
     <url value="Condition/558"/>
   </request>
-
 </entry>
 
 
