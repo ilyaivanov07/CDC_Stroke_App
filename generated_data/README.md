@@ -10,7 +10,6 @@ From the repository root:
    * chmod 755 /home/fhir/sample-patients/generated-data/*.xml
    * exit
 3. Re-load the local FHIR server with:
-   * cd /home/student (or wherever smart-on-fhir sample deployed)
-   * sudo ./installer/provisioning/examples/tasks/reset-database.sh
+   * sudo ~/installer/provisioning/examples/tasks/reset-database.sh
 
 Note: Anytime you restart SMART on FHIR you will need to re-run these steps to reset the fhir database with our custom data. This is because the SMART on FHIR default app recreates the patient data from a different source. The purpose of this step is to override that data.
