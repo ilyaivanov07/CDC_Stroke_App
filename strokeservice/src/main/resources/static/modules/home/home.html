@@ -42,14 +42,14 @@
 							</a>
 		       			</span>
 		       			<span ng-show="questionnaire.answered && questionnaire.isActive" >
-		       				(<a href="#/" ng-click="show = true;  main.activeRow = patient.firstName; viewQuestionnaireResponse(patient, questionnaire.json); showing = !showing">{{questionnaire.id}}</a>)
+		       				(<a href="#/" ng-click="main.activeRow = patient.firstName; viewQuestionnaireResponse(patient, questionnaire.json); showing = !showing">{{questionnaire.id}}</a>)
 		       			</span>
 					</div>
 					<div ng-repeat-end  ng-show="main.activeRow==patient.firstName" >
 						<span ng-show="showing">
-	           			<a href ng-click="downloadQuestionnaireResponseCSV(patient, questionnaire.csv)" style="margin-right:60px;">
+	           				<a href ng-click="downloadQuestionnaireResponseCSV(patient, questionnaire.csv)" style="margin-right:60px;">
 							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> CSV</span></a>
-						<a href ng-click="downloadQuestionnaireResponseJSON(patient, questionnaire.json)" id="downloadAnchorElem">
+							<a href ng-click="downloadQuestionnaireResponseJSON(patient, questionnaire.json)" id="downloadAnchorElem">
 							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> JSON</span></a>
 						</span>
 					</div>						

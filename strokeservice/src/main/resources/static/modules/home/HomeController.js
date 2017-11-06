@@ -37,11 +37,15 @@ angular.module('Home')
 			}
 		})
 		.success(function (response) {	
-			angular.forEach( response, function( value, key ) 
+			angular.forEach( response, function( patient, key ) 
 			{
-				processDaysSinceDischarge( value );
-				setQRavailable(value);
+				processDaysSinceDischarge(patient);
+				setQRavailable(patient);
+				
+				
+				
 			});
+			
 			$scope.patients = response;
 		})
 		.error(function(data, status) {
@@ -53,7 +57,6 @@ angular.module('Home')
 	};
 	
 	var setQRavailable =  function (patient){
-		
 		if ((patient.questionnaireResponseId == null || patient.questionnaireResponseId.length < 1) && patient.days > 30){
 			patient.displayQuestionnaire = '';
 		}
@@ -64,7 +67,6 @@ angular.module('Home')
 	{
 		$rootScope.selectedPatient = patient;
 		$rootScope.questionnaire = questionnaire;
-		//$location.url('/questionnaire?questionnaireId=' + questionnaire.id);
 		$location.path('/questionnaire');
 	};
 	
