@@ -35,14 +35,13 @@
        			 <td>
        			 	<div ng-repeat-start="questionnaire in patient.questionnaires">
 		       			<span ng-if="questionnaire.days < patient.days && questionnaire.isActive" >
-		       				<span ng-if="questionnaire.answered" >{{questionnaire.title}}</span>
 							<a href ng-if="!questionnaire.answered" ng-click="viewQuestionnaire(patient, questionnaire)">
 								<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 								{{questionnaire.title}}
 							</a>
 		       			</span>
-		       			<span ng-show="questionnaire.answered && questionnaire.isActive" >
-		       				(<a href="#/" ng-click="main.activeRow = patient.firstName; viewQuestionnaireResponse(patient, questionnaire.json); showing = !showing">{{questionnaire.id}}</a>)
+		       			<span ng-show="questionnaire.answered" >
+		       				{{questionnaire.title}}	(<a href="#/" ng-click="main.activeRow = patient.firstName; viewQuestionnaireResponse(patient, questionnaire.json); showing = !showing">{{questionnaire.id}}</a>)
 		       			</span>
 					</div>
 					<div ng-repeat-end  ng-show="main.activeRow==patient.firstName" >
