@@ -33,7 +33,7 @@
    				 <td>{{patient.firstName + ' ' + patient.lastName}}</td>
    				 <td>{{patient.days}}</td>
        			 <td>
-       			 	<div ng-repeat-start="questionnaire in patient.questionnaires">
+       			 	<div ng-repeat="questionnaire in patient.questionnaires">
 		       			<span ng-if="questionnaire.days < patient.days && questionnaire.isActive" >
 							<a href ng-if="!questionnaire.answered" ng-click="viewQuestionnaire(patient, questionnaire)">
 								<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
@@ -41,17 +41,17 @@
 							</a>
 		       			</span>
 		       			<span ng-show="questionnaire.answered" >
-		       				{{questionnaire.title}}	(<a href="#/" ng-click="main.activeRow = patient.firstName; viewQuestionnaireResponse(patient, questionnaire.json); showing = !showing">{{questionnaire.id}}</a>)
+		       				{{questionnaire.title}}
+	           				<a href ng-click="downloadQuestionnaireResponseCSV(patient, questionnaire.csv)" style="margin-right: 10px; margin-left: 10px;">
+								<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+								CSV
+							</a>
+							<a href ng-click="downloadQuestionnaireResponseJSON(patient, questionnaire.json)" id="downloadAnchorElem">
+								<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+								JSON
+							</a>
 		       			</span>
 					</div>
-					<div ng-repeat-end  ng-show="main.activeRow==patient.firstName" >
-						<span ng-show="showing">
-	           				<a href ng-click="downloadQuestionnaireResponseCSV(patient, questionnaire.csv)" style="margin-right:60px;">
-							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> CSV</span></a>
-							<a href ng-click="downloadQuestionnaireResponseJSON(patient, questionnaire.json)" id="downloadAnchorElem">
-							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"> JSON</span></a>
-						</span>
-					</div>						
        			 </td>
        		</tr>
    		</tbody>		 
