@@ -109,4 +109,39 @@ angular.module('Home')
 		var diffDays = parseInt(Math.ceil( timeDiff / ( 1000 * 3600 * 24 ) ),10) + 1;
 		patient.days = diffDays;
 	};
+
+    $scope.questionChecker = function (questionaires, questionaire) {
+
+        var questionLength =[] ;
+        angular.forEach(questionaires, function (question,val) {
+            questionLength.push(question.day);
+        });
+        questionLength.sort(function(a, b) {
+            return a - b;
+        });
+        var close = closest(questionaire,questionLength);
+        if (questionaire.day > close) {return true;};
+        return false;
+    };
+    var closest = function  (num, arr) {
+        var mid;
+        var lo = 0;
+        var hi = arr.length - 1;
+        while (hi - lo > 1) {
+            mid = Math.ceil ((lo + hi) / 2);
+            if (arr[mid] < num) {
+                lo = mid;
+            } else {
+                hi = mid;
+            }
+        }
+        if (num - arr[lo] <= arr[hi] - num) {
+            return arr[lo];
+        }
+        return arr[hi];
+    };
+
+
+
+
 }]);
