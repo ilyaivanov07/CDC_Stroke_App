@@ -110,7 +110,7 @@ angular.module('Home')
 		patient.days = diffDays;
 	};
 
-    $scope.questionChecker = function (questionaires, questionaire) {
+    $scope.questionChecker = function (questionaires, questionaire, days) {
         var questionLength =[] ;
         var i;
         // for (i = 0; i < questionaires.length; i++) {
@@ -124,8 +124,9 @@ angular.module('Home')
             return a - b;
         });
         var close = closest(questionaire,questionLength);
-        console.log("closest is " + close);
-        return 5;
+        console.log("closest is " + close + " days is " + days);
+
+        return (close == days);
     };
     var closest = function  (num, arr) {
         var mid;
