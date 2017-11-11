@@ -31,14 +31,14 @@
 		<tbody>
 		<tr ng-repeat="patient in patients | orderBy:orderByField:reverseSort" >
 
-            <div>
+            <div ng-init="eligible = questionChecker(patient.questionnaires,patient.days)">
 			<td>{{patient.firstName + ' ' + patient.lastName + ' ' + eligible}}</td>
 			<td>{{patient.days}}</td>
 			<td>
 
 				<div ng-repeat="questionnaire in patient.questionnaires">
 
-		       			<span ng-if="questionnaire.days < patient.days && questionnaire.isActive && questionnaire.days == questionChecker(patient.questionnaires,patient.days)" >
+		       			<span ng-if="questionnaire.days < patient.days && questionnaire.isActive && questionnaire.days == eligible" >
 							<a href ng-if="!questionnaire.answered" ng-click="viewQuestionnaire(patient, questionnaire)">
 								<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 								{{questionnaire.title}}
