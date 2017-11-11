@@ -111,7 +111,7 @@ angular.module('Home')
 	};
 
     $scope.questionChecker = function (patient, questionaires, questionaire, days) {
-        var questionLength =[] ;
+        var questionLength =[0] ;
 
         var i;
         // for (i = 0; i < questionaires.length; i++) {
