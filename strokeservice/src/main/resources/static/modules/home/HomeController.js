@@ -128,7 +128,7 @@ angular.module('Home')
         });
         var close = closest(questionaire,questionLength);
 
-        console.log("patient is " + patient.firstName + " closest is " + close + ", questionnaire.days is " + days + " question length is " + questionLength.length);
+        // console.log("patient is " + patient.firstName + " closest is " + close + ", questionnaire.days is " + days + " question length is " + questionLength.length);
 
         return (close == days);
 
