@@ -113,15 +113,18 @@ angular.module('Home')
     $scope.questionChecker = function (questionaires, questionaire) {
 
         var questionLength =[] ;
-        angular.forEach(questionaires, function (question,val) {
-            questionLength.push(question.day);
-        });
+        for (i = 0; i < questionaires.length; i++) {
+        	questionLength.push(questionaires[i].day);
+		}
+
+        // angular.forEach(questionaires, function (question,val) {
+        //     questionLength.push(question.day);
+        // });
         questionLength.sort(function(a, b) {
             return a - b;
         });
         var close = closest(questionaire,questionLength);
-        if (questionaire.day > close) {return true;};
-        return false;
+        return close;
     };
     var closest = function  (num, arr) {
         var mid;
