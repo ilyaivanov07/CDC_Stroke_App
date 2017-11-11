@@ -111,20 +111,20 @@ angular.module('Home')
 	};
 
     $scope.questionChecker = function (questionaires, questionaire) {
-        // var questionLength =[] ;
-        // var i;
-        // // for (i = 0; i < questionaires.length; i++) {
-        // 	// console.log("questionaire length: " + questionaires[i].day);
-        // 	// questionLength.push(questionaires[i].day);
-        // // }
-        // angular.forEach(questionaires, function (question,val) {
-        //     questionLength.push(question.days);
-        // });
-        // questionLength.sort(function(a, b) {
-        //     return a - b;
-        // });
-        // var close = closest(questionaire,questionLength);
-        // print("closest is " + close);
+        var questionLength =[] ;
+        var i;
+        // for (i = 0; i < questionaires.length; i++) {
+        	// console.log("questionaire length: " + questionaires[i].day);
+        	// questionLength.push(questionaires[i].day);
+        // }
+        angular.forEach(questionaires, function (question,val) {
+            questionLength.push(question.days);
+        });
+        questionLength.sort(function(a, b) {
+            return a - b;
+        });
+        var close = closest(questionaire,questionLength);
+        console.log("closest is " + close);
         return 5;
     };
     var closest = function  (num, arr) {
