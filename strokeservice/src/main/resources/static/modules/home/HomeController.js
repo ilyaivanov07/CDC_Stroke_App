@@ -110,6 +110,7 @@ angular.module('Home')
 		patient.days = diffDays;
 	};
 
+
     $scope.questionChecker = function (patient, questionaires, questionaire, days) {
         var questionLength =[0] ;
 
@@ -118,6 +119,7 @@ angular.module('Home')
         	// console.log("questionaire length: " + questionaires[i].day);
         	// questionLength.push(questionaires[i].day);
         // }
+
         angular.forEach(questionaires, function (question,val) {
             questionLength.push(question.days);
         });
@@ -125,10 +127,13 @@ angular.module('Home')
             return a - b;
         });
         var close = closest(questionaire,questionLength);
+
         console.log("patient is " + patient.firstName + " closest is " + close + ", questionnaire.days is " + days + " question length is " + questionLength.length);
 
         return (close == days);
+
     };
+    
     var closest = function  (num, arr) {
         var mid;
         var lo = 0;
