@@ -120,9 +120,11 @@ angular.module('Home')
 		// }
 
         angular.forEach(questionaires, function (question,val) {
+        	console.log('hi');
             console.log("questionaire length: " + question.day);
             questionLength.push(question.day);
         });
+        console.log("size of questionlength" + questionLength.length);
         questionLength.sort(function(a, b) {
             return a - b;
         });
