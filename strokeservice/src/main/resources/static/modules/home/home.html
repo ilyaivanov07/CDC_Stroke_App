@@ -31,7 +31,7 @@
 		<	</tb>
 		<tr ng-repeat="patient in patients | orderBy:orderByField:reverseSort" >
             <div ng-init="eligible = questionChecker(patient.questionaires,patient.days)">
-			<td>{{patient.firstName + ' ' + patient.lastName + ' ' + eligible}}</td>
+			<td>{{patient.firstName + ' ' + patient.lastName + ' ' + eligible + ' eligible'}}</td>
 			<td>{{patient.days}}</td>
 			<td>
 
