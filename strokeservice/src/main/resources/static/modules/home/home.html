@@ -33,7 +33,7 @@
 			<td>{{patient.firstName + ' ' + patient.lastName}}</td>
 			<td>{{patient.days}}</td>
 			<td>
-                <div ng-init="eligible = questionChecker(patient.questionaires,patient.days)">
+                <div ng-init="eligible = questionChecker(patient.questionaires,patient.day)">
 				<div ng-repeat="questionnaire in patient.questionnaires">
 
 		       			<span ng-if="questionnaire.days < patient.days && questionnaire.isActive && questionnaire.days == eligible" >
