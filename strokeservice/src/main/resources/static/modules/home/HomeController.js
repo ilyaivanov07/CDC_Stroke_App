@@ -111,18 +111,18 @@ angular.module('Home')
 	};
 
     $scope.questionChecker = function (questionaires, questionaire) {
-
-        var questionLength =[] ;
+        var questionLength =[];
         angular.forEach(questionaires, function (question,val) {
-            questionLength.push(question.day);
+            questionLength.push(question.days);
         });
         questionLength.sort(function(a, b) {
             return a - b;
         });
         var close = closest(questionaire,questionLength);
-        if (questionaire.day > close) {return true;};
+        if (questionaire.days > close) {return true;};
         return false;
     };
+    
     var closest = function  (num, arr) {
         var mid;
         var lo = 0;
