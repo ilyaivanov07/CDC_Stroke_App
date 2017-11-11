@@ -125,7 +125,7 @@ angular.module('Home')
             return a - b;
         });
         var close = closest(questionaire,questionLength);
-        console.log("patient is " + patient.firstName + " closest is " + close + " days is " + days);
+        console.log("patient is " + patient.firstName + " closest is " + close + " days is " + days + " question length is " + questionLength.length);
 
         return (close == days);
     };
