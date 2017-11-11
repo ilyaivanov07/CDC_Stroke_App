@@ -111,24 +111,20 @@ angular.module('Home')
 	};
 
     $scope.questionChecker = function (questionaires, questionaire) {
-		console.log("testing")
         var questionLength =[] ;
 		var i;
         // for (i = 0; i < questionaires.length; i++) {
         	// console.log("questionaire length: " + questionaires[i].day);
         	// questionLength.push(questionaires[i].day);
 		// }
-		console.log("questionaires: " + questionaires);
         angular.forEach(questionaires, function (question,val) {
-        	console.log('hi');
-            console.log("questionaire length: " + question.days);
             questionLength.push(question.days);
         });
-        console.log("size of questionlength" + questionLength.length);
         questionLength.sort(function(a, b) {
             return a - b;
         });
         var close = closest(questionaire,questionLength);
+        print("closest is " + close);
         return close;
     };
     var closest = function  (num, arr) {
