@@ -114,14 +114,14 @@ angular.module('Home')
 		console.log("testing")
         var questionLength =[] ;
 		var i;
-        for (i = 0; i < questionaires.length; i++) {
-        	console.log("questionaire length: " + questionaires[i].day);
-        	questionLength.push(questionaires[i].day);
-		}
+        // for (i = 0; i < questionaires.length; i++) {
+        	// console.log("questionaire length: " + questionaires[i].day);
+        	// questionLength.push(questionaires[i].day);
+		// }
 
-        // angular.forEach(questionaires, function (question,val) {
-        //     questionLength.push(question.day);
-        // });
+        angular.forEach(questionaires, function (question,val) {
+            questionLength.push(question.day);
+        });
         questionLength.sort(function(a, b) {
             return a - b;
         });
