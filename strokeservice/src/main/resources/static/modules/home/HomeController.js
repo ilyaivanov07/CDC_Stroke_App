@@ -113,6 +113,7 @@ angular.module('Home')
     $scope.questionChecker = function (questionaires, questionaire) {
 		console.log("testing")
         var questionLength =[] ;
+		var i;
         for (i = 0; i < questionaires.length; i++) {
         	console.log("questionaire length: " + questionaires[i].day);
         	questionLength.push(questionaires[i].day);
