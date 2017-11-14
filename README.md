@@ -17,8 +17,12 @@ SMART on FHIR sandboxed server runs on http://localhost:9080
 1. open the file pg_hba.conf in /etc/postgresql/9.x/main
 2. change this line: local   all postgres  **trust**
 3. sudo service postgresql restart
-
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+
+docker run --net host -p 8888:8007 -t strokeapp
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 ### Open Questions   
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
