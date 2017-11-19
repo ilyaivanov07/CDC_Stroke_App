@@ -34,7 +34,7 @@ New functions:
 3. The questionnaire box with the "Submit" and "Cancel" buttons is located on the right hand side. It is sticky and does not disappear as the page scrolls up/down.
 4. A survey can be made active/inactive
 5. If multiple surveys are available, only one survey that is most appropriate is displayed.
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+
 
 	
 	
