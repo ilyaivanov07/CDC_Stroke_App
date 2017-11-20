@@ -41,5 +41,7 @@ services:
          - postgres
       depends_on:
          - postgres
+      command: ["./wait-for-it.sh"]
+      
          #- fhir_post
       #network_mode: host
