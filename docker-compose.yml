@@ -9,39 +9,53 @@
 version: '2.0'
 
 services:
-   postgres:
-      # Empty database
-      # image: postgres:9.3
-      # Database with DSTU3 example data
-      image: jtmille3/postgres:latest
-      #container_name: fhir_postgres
+   strokeapp_db:
+      image: postgres:alpine
       restart: always
       ports:
          - 5432:5432  
-#      networks:
-#        vpcbr:
-#            ipv4_address: 172.19.0.1
-      #network_mode: host
-
-         
       environment:
-         - POSTGRES_DB=fhir
-         - POSTGRES_USER=postgres
-   fhir:
-      image: jtmille3/hapi-fhir-dstu3-v2.5-postgres:latest
+         POSTGRES_DB: strokeapp
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: password
+      #command: bash -c "sleep 10"
+
+   web:
+      image: iivanov8/strokeapp
       restart: always
       ports:
-         - 8080:8080
-      environment:
+         - 8888:8888
+      depends_on:
+         - strokeapp_db
+      #command: ./wait-for-postgres.sh strokeapp_db
+      #command: ["bash", "-c", "sleep 1"]
+
+#   postgres:
+      # Empty database
+      # Database with DSTU3 example data
+#      image: jtmille3/postgres:latest
+#      restart: always
+#      ports:
+#         - 5432:5432  
+#      #network_mode: host
+#      environment:
+#         - POSTGRES_DB=fhir
+#         - POSTGRES_USER=postgres
+
+#   fhir:
+#      image: jtmille3/hapi-fhir-dstu3-v2.5-postgres:latest
+#      restart: always
+#      ports:
+#         - 8080:8080
+#      environment:
          #- JAVA_OPTIONS=-Dpostgres.host=172.19.0.1
          #- JAVA_OPTIONS=-Dpostgres.host=0.0.0.0
-         - JAVA_OPTIONS=-Dpostgres.host=postgres
+#         - JAVA_OPTIONS=-Dpostgres.host=postgres
          #- JAVA_OPTIONS=-Dpostgres.host=fhir_postgres
-      links:
-         - postgres
-      depends_on:
-         - postgres
-      #command: ["./wait-for-it.sh"]
+#      links:
+#         - postgres
+#      depends_on:
+#         - postgres
+      # command: ["./wait-for-it.sh"]
       
-         #- fhir_post
-      #network_mode: host
+
