@@ -54,6 +54,26 @@ services:
       depends_on:
          - strokeapp_db
       #command: ["bash", "-c", "sleep 1"]
+   
+   start_database:
+      image: dadarek/wait-for-dependencies
+      depends_on:
+        - the_database
+        - another_service
+      environment:
+        - SLEEP_LENGTH: 0.5
+      command: strokeapp_db:5433 postgres:5432
+      
+   start_fhir:
+      image: dadarek/wait-for-dependencies
+      depends_on:
+        - the_database
+        - another_service
+        - fhir
+      environment:
+        - SLEEP_LENGTH: 0.5
+      command: strokeapp_db:5433 postgres:5432 fhir:9080
+
 
 
       
