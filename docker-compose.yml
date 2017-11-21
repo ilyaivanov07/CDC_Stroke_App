@@ -15,7 +15,7 @@ services:
       image: jtmille3/postgres:latest
       restart: always
       ports:
-         - 5432:5432  
+         - 5432:5432
       environment:
          - POSTGRES_DB=fhir
          - POSTGRES_USER=postgres
@@ -24,7 +24,7 @@ services:
       image: postgres:alpine
       restart: always
       ports:
-         - 5433:5433  
+         - 5433:5433
       environment:
          POSTGRES_DB: strokeapp
          POSTGRES_USER: postgres
@@ -50,31 +50,22 @@ services:
       ports:
          - 8888:8888
       #environment:
-      #   springDatasource: "jdbc:postgresql://strokeapp_db:5432/strokeapp"   
+      #   springDatasource: "jdbc:postgresql://strokeapp_db:5432/strokeapp"
       depends_on:
          - strokeapp_db
       #command: ["bash", "-c", "sleep 1"]
-   
+
    start_database:
       image: dadarek/wait-for-dependencies
       depends_on:
-        - the_database
-        - another_service
-      environment:
-        - SLEEP_LENGTH: 0.5
+        - postgres
+        - strokeapp_db
       command: strokeapp_db:5433 postgres:5432
-      
+
    start_fhir:
       image: dadarek/wait-for-dependencies
       depends_on:
-        - the_database
-        - another_service
+        - postgres
+        - strokeapp_db
         - fhir
-      environment:
-        - SLEEP_LENGTH: 0.5
       command: strokeapp_db:5433 postgres:5432 fhir:9080
-
-
-
-      
-
