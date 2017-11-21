@@ -9,20 +9,20 @@
 version: '2.1'
 
 services:
-#   postgres:
+   postgres:
       # Database with DSTU3 example data
-#      image: jtmille3/postgres:latest
-#      restart: always
-#      ports:
-#         - 5432:5432
-#      environment:
-#         - POSTGRES_DB=fhir
-#         - POSTGRES_USER=postgres
-#      healthcheck:
-#         test: ["CMD-SHELL", "pg_isready -p 5432 -U postgres"]
-#         interval: 3s
-#         timeout: 30s
-#         retries: 35
+      image: jtmille3/postgres:latest
+      restart: always
+      ports:
+         - 5432:5432
+      environment:
+         - POSTGRES_DB=fhir
+         - POSTGRES_USER=postgres
+      healthcheck:
+         test: ["CMD-SHELL", "pg_isready -p 5432 -U postgres"]
+         interval: 3s
+         timeout: 30s
+         retries: 35
 
    strokeapp_db:
       image: postgres:alpine
@@ -41,18 +41,18 @@ services:
          retries: 35
                             #command: bash -c "sleep 10"
 
-#   fhir:
-#      image: jtmille3/hapi-fhir-dstu3-v2.5-postgres:v2  
-#      restart: always
-#      ports:
-#         - 9080:8080
-#      environment:
-#         - JAVA_OPTIONS=-Dpostgres.host=postgres
-#      links:
-#         - postgres
-#      depends_on:
-#         postgres:
-#           condition: service_healthy
+   fhir:
+      image: jtmille3/hapi-fhir-dstu3-v2.5-postgres:v2  
+      restart: always
+      ports:
+         - 9080:8080
+      environment:
+         - JAVA_OPTIONS=-Dpostgres.host=postgres
+      links:
+         - postgres
+      depends_on:
+         postgres:
+           condition: service_healthy
 
 
    web:
