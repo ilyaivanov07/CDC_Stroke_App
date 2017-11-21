@@ -20,7 +20,7 @@ services:
          - POSTGRES_DB=fhir
          - POSTGRES_USER=postgres
       healthcheck:
-         test: ["CMD-SHELL", "pg_isready -p 5432 -u postgres"]
+         test: ["CMD-SHELL", "pg_isready -p 5432 -U postgres"]
          interval: 3s
          timeout: 30s
          retries: 35
@@ -29,14 +29,14 @@ services:
       image: postgres:alpine
       restart: always
       ports:
-         - 5433:5433
+         - 5433:5432
       environment:
          POSTGRES_DB: strokeapp
          POSTGRES_USER: postgres
          POSTGRES_PASSWORD: password
          POSTGRES_PORT: 5433
       healthcheck:
-         test: ["CMD-SHELL", "pg_isready -p 5433 -u postgres"]
+         test: ["CMD-SHELL", "pg_isready -p 5432 -U postgres"]
          interval: 3s
          timeout: 30s
          retries: 35
