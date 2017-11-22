@@ -49,12 +49,23 @@ public class PatientServiceImpl implements PatientService {
 
 		// Get first page of finished Encounters, 'date' attribute does not mean discharge,
 		// just that the date is in the period, so filter on date in processEncounter().
-		Bundle results = client.search()
+		Bundle results = null;
+		
+		
+		try {
+		
+			results = client.search()
 		      .forResource(Encounter.class)
 		      .where(Encounter.STATUS.exactly().code("finished"))
 		      .returnBundle(Bundle.class)
 		      .execute();
-
+		}
+		catch(Exception ex) {
+			System.out.println("Entry with code 'finished' not found: "  + ex.getMessage());
+			return;
+		}
+		
+		
 		// Query the StrokeCodes table and save the codes locally
 		JsonNode strokeCodes = serverConnectionService.getStrokeCodesFromStrokeAppServer();
 		Iterator<JsonNode> itrCodes = strokeCodes.elements();
