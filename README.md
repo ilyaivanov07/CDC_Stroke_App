@@ -1,21 +1,20 @@
 ## CDC POST DISCHARGE STROKE PATIENT DATA REPORTING APP - PHASE 2
 
-To run the app in the VM:  
-1.   open terminal
-2.   ./start-strokeservice.sh
-
 To run the app using Docker:
 1. open terminal
 2. navigate to CDC-Post-Discharge-Stroke-Patient-Data
 3. $ sudo docker-compose up
 
-NOTE: We use external FHIR server at 
-
 In the browser, navigate to  http://localhost:8888/  
+
 user: admin  
 pwd: password  
+
 non-admin user: nurse_jane  
-pwd: password
+pwd: password  
+
+NOTE: We use external FHIR server at http://fhirtest.uhn.ca/  
+
 
 New functions:
 1. The app now has ability to host multiple questionnaires.  
