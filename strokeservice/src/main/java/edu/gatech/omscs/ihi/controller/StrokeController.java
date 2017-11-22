@@ -117,7 +117,12 @@ public class StrokeController
 		if ( checkCredentials( request ) )
 		{
 			// get patients from FHIR server
-			patientService.getPatientsFromFHIR();
+			try {
+				patientService.getPatientsFromFHIR();
+			}
+			catch(Exception ex) { 
+				ex.printStackTrace(System.out);
+			}
 			
 			int destId = this.surveyAdminService.getDestinationForSurveyAdmin( request.getHeader( "username" ) );
 			String strDestId = new Integer(destId).toString();
@@ -233,10 +238,19 @@ public class StrokeController
 				
 				String json_resource = IOUtils.toString( stream, "UTF-8" );
 				
-				// Save Questionnaire to FHIR
-				String fhirId = this.fhirResource.updateResource("Questionnaire", json_resource);
+				String fhirId = "";
+				
+				try {
+					// Save Questionnaire to FHIR
+					fhirId = this.fhirResource.updateResource("Questionnaire", json_resource);
+				}
+				catch(Exception ex) {
+					fhirId = java.util.UUID.randomUUID().toString();
+					ex.printStackTrace(System.out);
+				}
+				
 				// Save Questionnaire to localdb
-				this.questionnaireRepository.save( new Questionnaire(fhirId, json_resource, true) );
+				this.questionnaireRepository.save(new Questionnaire(fhirId, json_resource, true));
 			}
 			catch ( Exception exp ) {
 				exp.printStackTrace();
@@ -275,8 +289,15 @@ public class StrokeController
 		if ( checkCredentials( request) ) {
 			// delete from StrokeApp DB
 			this.questionnaireRepository.delete( questionnaireId );
-			// delete from FHIR
-			this.fhirResource.deleteFhirResource("Questionnaire", questionnaireId);
+
+			try {
+				// delete from FHIR
+				this.fhirResource.deleteFhirResource("Questionnaire", questionnaireId);
+			}
+			catch(Exception ex) {
+				ex.printStackTrace(System.out);
+			}
+			
 		}
 	}
 
@@ -388,14 +409,19 @@ public class StrokeController
 								
 				FhirContext ctx = this.serverConnectionService.getFhirContext();
 				String encoded = ctx.newJsonParser().encodeResourceToString(qr);
-			    
-			    // Push QuestionnaireResponse to FHIR
-			    String qrId = this.fhirResource.updateResource("QuestionnaireResponse", encoded);
+
+				try {
+				    // Push QuestionnaireResponse to FHIR
+				    this.fhirResource.updateResource("QuestionnaireResponse", encoded);
+				}
+				catch(Exception ex) {
+					ex.printStackTrace(System.out);
+				}
 			    
 			    // save PatientQuestionnaire in DB
 			    PatientQuestionnaireId patientQuestionnaireId = new PatientQuestionnaireId(mrn, encounterId, destinationId, questionnaireId);
 			    PatientQuestionnaire patientQuestionnaire = new PatientQuestionnaire(patientQuestionnaireId, 
-			    		qrId, 
+			    		questionnaireId, 
 			    		encoded, 
 			    		csv.toString());
 			    this.patientQuestionnaireRepository.save(patientQuestionnaire);
@@ -420,7 +446,12 @@ public class StrokeController
 	{
 		if ( checkCredentials( request) )
 		{
-			this.fhirResource.getFhirResource( resourceType, resourceId );
+			try {
+				this.fhirResource.getFhirResource( resourceType, resourceId );
+			}
+			catch(Exception ex) {
+				ex.printStackTrace(System.out);
+			}
 		}
 		
 		return null;
@@ -431,7 +462,12 @@ public class StrokeController
 	{
 		if ( checkCredentials( request) )
 		{
-			this.fhirResource.updateResource( resourceType, resource.toString() );
+			try {
+				this.fhirResource.updateResource( resourceType, resource.toString() );
+			}
+			catch(Exception ex) {
+				ex.printStackTrace(System.out);
+			}
 		}
 	}
 	
@@ -584,3 +620,4 @@ public class StrokeController
 	*/
 		
 }
+
