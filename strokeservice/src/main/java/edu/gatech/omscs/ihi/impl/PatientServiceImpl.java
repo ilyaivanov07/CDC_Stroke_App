@@ -192,7 +192,8 @@ public class PatientServiceImpl implements PatientService {
 		}
 		catch ( Exception exception )
 		{
-			exception.printStackTrace();
+			//exception.printStackTrace();
+			return;
 		}
     }
 	
